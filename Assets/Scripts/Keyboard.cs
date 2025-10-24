@@ -1,20 +1,29 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
 public class Keyboard : MonoBehaviour
 {
-    [SerializeField] private GameObject errorMsg;
-    private TextMeshProUGUI erroeMsgTxt;
+    [SerializeField] private GameObject work;
+    [SerializeField] private GameObject menu;
+    [SerializeField] private PopupManager popupManager;
+    [SerializeField] private Score score;
+    [SerializeField] private ExampleGeneration exampleGeneration;
+    [SerializeField] private Button nextButton;
+    [SerializeField] private Toggle add;
+    [SerializeField] private Toggle sub;
+    [SerializeField] private Toggle multi;
+    [SerializeField] private Toggle div;
     private TextMeshProUGUI answer;
-    private float disableTime = 3f;
 
     private void Start()
     {
+        nextButton.interactable = false;
         answer = GameObject.FindWithTag("Answer").GetComponent<TextMeshProUGUI>();
-        erroeMsgTxt = GetComponentInChildren<TextMeshProUGUI>();
-        errorMsg.SetActive(false);
         answer.text = "?";
+        work.SetActive(false);
+        menu.SetActive(true);
+        exampleGeneration.StartGenaration(1);
     }
 
     public void SetNumber(int number)
@@ -31,8 +40,7 @@ public class Keyboard : MonoBehaviour
             }
             else
             {
-                errorMsg.SetActive(true);
-                StartCoroutine(DisableAfterSeconds(disableTime));
+                popupManager.ErrorMsg("Слишком много цифр");
             }
         }
     }
@@ -55,19 +63,47 @@ public class Keyboard : MonoBehaviour
 
     public void Check()
     {
-
+        if (answer.text == "?")
+        {
+            popupManager.ErrorMsg("Введите значение");
+        }
+        else
+        {
+            int.TryParse(answer.text, out int answerResult);
+            if (answerResult == exampleGeneration.ResultOperation)
+            {
+                popupManager.ShowRightPopup();
+                score.RightAnswer();
+                nextButton.interactable = true;
+            }else if (answerResult != exampleGeneration.ResultOperation)
+            {
+                popupManager.ShowWrongtPopup(exampleGeneration.ResultOperation.ToString());
+                score.WrongAnswer();
+                nextButton.interactable = true;
+            }
+        }
     }
 
     public void Next()
     {
-
+        popupManager.ResetPoups();
+        ClearField();
+        exampleGeneration.StartGenaration(1);
+        nextButton.interactable = false;
     }
-
-    IEnumerator DisableAfterSeconds(float seconds)
+    public void Menu()
     {
-        yield return new WaitForSeconds(seconds);
-        errorMsg.SetActive(false);
+        work.SetActive(false);
+        menu.SetActive(true);
+    }
+    public void StartGame()
+    {
+        work.SetActive(true);
+        menu.SetActive(false);
     }
 
+    public void Difficult()
+    {
 
+    }
 }
