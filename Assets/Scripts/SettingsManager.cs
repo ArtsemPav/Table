@@ -23,7 +23,7 @@ public class SettingsManager : MonoBehaviour
     private void Start()
     {
         LoadSettings();
-        SaveSettings(); 
+        SaveSettings();
         addToogle.onValueChanged.AddListener((value) => OnAnyToggleChanged(value, "AddBool"));
         subToogle.onValueChanged.AddListener((value) => OnAnyToggleChanged(value, "SubBool"));
         multiplyToogle.onValueChanged.AddListener((value) => OnAnyToggleChanged(value, "MultyBool"));
@@ -140,7 +140,7 @@ public class SettingsManager : MonoBehaviour
                 {
                     popupManager.ErrorMsg("Значение не должно быть меньше 0");
                 }
-                    break;
+                break;
             case "FirstSub":
                 value = PlayerPrefs.GetInt(fieldname, 11);
                 if (value > 1)
@@ -230,24 +230,48 @@ public class SettingsManager : MonoBehaviour
         SaveSettings();
     }
 
-    private void OnAnyToggleChanged(bool isOn, string toggleName)
+    private void OnAnyToggleChanged(bool isOn, string playerPrefsKey)
     {
-        switch (toggleName)
+        // Сохраняем состояние текущего Toggle
+        PlayerPrefs.SetInt(playerPrefsKey, isOn ? 1 : 0);
+
+        // Проверяем, что хотя бы один Toggle включен
+        if (!IsAnyToggleOn())
+        {
+            // Если ни один не включен - включаем текущий обратно
+            SetToggleState(playerPrefsKey, true);
+            Debug.LogWarning("Должен быть включен хотя бы один Toggle!");
+            popupManager.ErrorMsg("Должен быть включен хотя бы один Toggle!");
+        }
+    }
+
+    private bool IsAnyToggleOn()
+    {
+        return PlayerPrefs.GetInt("AddBool", 1) == 1 ||
+               PlayerPrefs.GetInt("SubBool", 0) == 1 ||
+               PlayerPrefs.GetInt("MultyBool", 0) == 1 ||
+               PlayerPrefs.GetInt("DivBool", 0) == 1;
+    }
+
+    private void SetToggleState(string playerPrefsKey, bool state)
+    {
+        PlayerPrefs.SetInt(playerPrefsKey, state ? 1 : 0);
+
+        // Обновляем визуальное состояние Toggle
+        switch (playerPrefsKey)
         {
             case "AddBool":
-                PlayerPrefs.SetInt(toggleName, isOn ? 1 : 0);
+                addToogle.isOn = state;
                 break;
             case "SubBool":
-                PlayerPrefs.SetInt(toggleName, isOn ? 1 : 0);
+                subToogle.isOn = state;
                 break;
             case "MultyBool":
-                PlayerPrefs.SetInt(toggleName, isOn ? 1 : 0);
+                multiplyToogle.isOn = state;
                 break;
-            case "DevBool":
-                PlayerPrefs.SetInt(toggleName, isOn ? 1 : 0);
+            case "DivBool":
+                divToogle.isOn = state;
                 break;
         }
-        Debug.Log($"{toggleName} изменился на: {isOn}");
-        SaveSettings();
     }
 }
