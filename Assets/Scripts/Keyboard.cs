@@ -1,29 +1,26 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using System.Collections.Generic;
 
 public class Keyboard : MonoBehaviour
 {
-    [SerializeField] private GameObject work;
-    [SerializeField] private GameObject menu;
     [SerializeField] private PopupManager popupManager;
     [SerializeField] private Score score;
     [SerializeField] private ExampleGeneration exampleGeneration;
+    [SerializeField] private SettingsManager settingsManager;
     [SerializeField] private Button nextButton;
-    [SerializeField] private Toggle add;
-    [SerializeField] private Toggle sub;
-    [SerializeField] private Toggle multi;
-    [SerializeField] private Toggle div;
-    private TextMeshProUGUI answer;
+    [SerializeField] private Button checkButton;
+    [SerializeField] private TextMeshProUGUI answer;
+    [SerializeField] private TextMeshProUGUI playerName;
 
     private void Start()
     {
+        playerName.text = PlayerPrefs.GetString("PlayerName", "Ghost");
+        exampleGeneration.StartGenaration();
         nextButton.interactable = false;
-        answer = GameObject.FindWithTag("Answer").GetComponent<TextMeshProUGUI>();
         answer.text = "?";
-        work.SetActive(false);
-        menu.SetActive(true);
-        exampleGeneration.StartGenaration(1);
     }
 
     public void SetNumber(int number)
@@ -75,11 +72,13 @@ public class Keyboard : MonoBehaviour
                 popupManager.ShowRightPopup();
                 score.RightAnswer();
                 nextButton.interactable = true;
+                checkButton.interactable = false;
             }else if (answerResult != exampleGeneration.ResultOperation)
             {
                 popupManager.ShowWrongtPopup(exampleGeneration.ResultOperation.ToString());
                 score.WrongAnswer();
                 nextButton.interactable = true;
+                checkButton.interactable = false;
             }
         }
     }
@@ -88,22 +87,8 @@ public class Keyboard : MonoBehaviour
     {
         popupManager.ResetPoups();
         ClearField();
-        exampleGeneration.StartGenaration(1);
+        exampleGeneration.StartGenaration();
         nextButton.interactable = false;
-    }
-    public void Menu()
-    {
-        work.SetActive(false);
-        menu.SetActive(true);
-    }
-    public void StartGame()
-    {
-        work.SetActive(true);
-        menu.SetActive(false);
-    }
-
-    public void Difficult()
-    {
-
+        checkButton.interactable = true;
     }
 }

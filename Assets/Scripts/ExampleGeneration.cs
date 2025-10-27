@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System;
 
 public class ExampleGeneration : MonoBehaviour
 {
@@ -10,34 +11,17 @@ public class ExampleGeneration : MonoBehaviour
     private string operation;
     private string example;
 
-    public void StartGenaration(int n)
+    public void StartGenaration()
     {
-
-        switch (n)
-        {
-            case 1:
-                addition();
-                break;
-            case 2:
-                subtraction();
-                break;
-            case 3:
-                multiplication();
-                break;
-            case 4:
-                division();
-                break;
-            default:
-                multiplication();
-                break;
-        }
+        multiplication();
     }
+
 
     private void addition()
     {
         operation = "+";
-        firstNumber = Random.Range(0, 21);
-        secongNumber = Random.Range(0, 11);
+        firstNumber = UnityEngine.Random.Range(0, 21);
+        secongNumber = UnityEngine.Random.Range(0, 11);
         ResultOperation = firstNumber + secongNumber;
         example = $"{firstNumber} {operation} {secongNumber} = ";
         exampleTMP.text = example;
@@ -48,8 +32,8 @@ public class ExampleGeneration : MonoBehaviour
         operation = "-";
         while (secongNumber >= firstNumber)
         {
-            firstNumber = Random.Range(0, 100);
-            secongNumber = Random.Range(0, 100);
+            firstNumber = UnityEngine.Random.Range(0, 100);
+            secongNumber = UnityEngine.Random.Range(0, 100);
         }
         ResultOperation = firstNumber - secongNumber;
         example = $"{firstNumber} {operation} {secongNumber} = ";
@@ -58,8 +42,8 @@ public class ExampleGeneration : MonoBehaviour
     private void multiplication()
     {
         operation = "*";
-        firstNumber = Random.Range(1, 11);
-        secongNumber = Random.Range(1, 11);
+        firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstAdd", 11));
+        secongNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("SecondAdd", 11));
         ResultOperation = firstNumber * secongNumber;
         example = $"{firstNumber} {operation} {secongNumber} = ";
         exampleTMP.text = example;
@@ -70,8 +54,8 @@ public class ExampleGeneration : MonoBehaviour
         operation = "/";
         do
         {
-            firstNumber = Random.Range(0, 100);
-            secongNumber = Random.Range(1, 11);
+            firstNumber = UnityEngine.Random.Range(0, 100);
+            secongNumber = UnityEngine.Random.Range(1, 11);
         } 
         while (firstNumber % secongNumber != 0);
 
