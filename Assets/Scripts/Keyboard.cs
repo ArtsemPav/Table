@@ -2,10 +2,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Keyboard : MonoBehaviour
 {
+    private float disableTimePopup = 5f;
+    private float playsong = 0.2f;
     [SerializeField] private PopupManager popupManager;
     [SerializeField] private Score score;
     [SerializeField] private ExampleGeneration exampleGeneration;
@@ -13,11 +16,12 @@ public class Keyboard : MonoBehaviour
     [SerializeField] private Button nextButton;
     [SerializeField] private Button checkButton;
     [SerializeField] private TextMeshProUGUI answer;
-    [SerializeField] private TextMeshProUGUI playerName;
+    [SerializeField] private AudioManager audioManager;
+    [SerializeField] private AudioClip right;
+    [SerializeField] private AudioClip wrong;
 
     private void Start()
     {
-        playerName.text = PlayerPrefs.GetString("PlayerName", "Ghost");
         exampleGeneration.StartGenaration();
         nextButton.interactable = false;
         answer.text = "?";
@@ -73,12 +77,17 @@ public class Keyboard : MonoBehaviour
                 score.RightAnswer();
                 nextButton.interactable = true;
                 checkButton.interactable = false;
-            }else if (answerResult != exampleGeneration.ResultOperation)
+                StartCoroutine(PlayAfterSeconds(playsong, right));
+                StartCoroutine(DisableAfterSeconds(disableTimePopup));
+            }
+            else if (answerResult != exampleGeneration.ResultOperation)
             {
                 popupManager.ShowWrongtPopup(exampleGeneration.ResultOperation.ToString());
                 score.WrongAnswer();
                 nextButton.interactable = true;
                 checkButton.interactable = false;
+                StartCoroutine(PlayAfterSeconds(playsong, wrong));
+                StartCoroutine(DisableAfterSeconds(disableTimePopup));
             }
         }
     }
@@ -90,5 +99,21 @@ public class Keyboard : MonoBehaviour
         exampleGeneration.StartGenaration();
         nextButton.interactable = false;
         checkButton.interactable = true;
+    }
+
+    IEnumerator DisableAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        popupManager.ResetPoups();
+        ClearField();
+        exampleGeneration.StartGenaration();
+        nextButton.interactable = false;
+        checkButton.interactable = true;
+    }
+
+    IEnumerator PlayAfterSeconds(float seconds, AudioClip sound)
+    {
+        yield return new WaitForSeconds(seconds);
+        audioManager.PlayShort(sound);
     }
 }

@@ -4,13 +4,13 @@ using System.Collections;
 
 public class PopupManager : MonoBehaviour
 {
+    [SerializeField] private float disableTimePopup = 3f;
     [SerializeField] private GameObject rightPopup;
     [SerializeField] private GameObject wrongPopup;
     [SerializeField] private GameObject errorPopup;
     [SerializeField] private TextMeshProUGUI rightAnswerTxt;
-    private TextMeshProUGUI errorMsg;
 
-    private float disableTime = 3f;
+    private TextMeshProUGUI errorMsg;
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class PopupManager : MonoBehaviour
     {
         errorMsg.text = msg;
         errorPopup.SetActive(true);
-        StartCoroutine(DisableAfterSeconds(disableTime));
+        StartCoroutine(DisableAfterSeconds(disableTimePopup));
     }
 
     IEnumerator DisableAfterSeconds(float seconds)

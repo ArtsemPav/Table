@@ -19,19 +19,32 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI divMaxFactorTMP2;
     [SerializeField] private PopupManager popupManager;
     [SerializeField] private TMP_InputField tmpInputField;
+    [SerializeField] private TextMeshProUGUI playerName;
+    [SerializeField] private Slider musicSlider;
+
+    private int addMaxFactor1 = 10;
+    private int addMaxFactor2 = 10;
+    private int subMaxFactor1 = 20;
+    private int subMaxFactor2 = 10;
+    private int multyMaxFactor1 = 10;
+    private int multyMaxFactor2 = 10;
+    private int divMaxFactor1 = 100;
+    private int divMaxFactor2 = 10;
 
     private void Start()
     {
         LoadSettings();
         SaveSettings();
+        musicSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
         addToogle.onValueChanged.AddListener((value) => OnAnyToggleChanged(value, "AddBool"));
         subToogle.onValueChanged.AddListener((value) => OnAnyToggleChanged(value, "SubBool"));
         multiplyToogle.onValueChanged.AddListener((value) => OnAnyToggleChanged(value, "MultyBool"));
         divToogle.onValueChanged.AddListener((value) => OnAnyToggleChanged(value, "DivBool"));
+        playerName.text = PlayerPrefs.GetString("PlayerName", "Ghost");
         tmpInputField.onEndEdit.AddListener(OnInputEndEdit);
     }
     // Сохранение настроек
-    private void SaveSettings()
+    public void SaveSettings()
     {
         PlayerPrefs.Save();
         LoadSettings();
@@ -50,21 +63,22 @@ public class SettingsManager : MonoBehaviour
     // Загрузка настроек
     public void LoadSettings()
     {
-        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.7f);
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
         playerNameTMP.text = PlayerPrefs.GetString("PlayerName", "Ghost");
+        playerName.text = PlayerPrefs.GetString("PlayerName", "Ghost");
         int maxScore = PlayerPrefs.GetInt("MaxScore", 0);
         addToogle.isOn = PlayerPrefs.GetInt("AddBool", 1) == 1;
-        addMaxFactorTMP1.text = PlayerPrefs.GetInt("FirstAdd", 11).ToString();
-        addMaxFactorTMP2.text = PlayerPrefs.GetInt("SecondAdd", 11).ToString();
+        addMaxFactorTMP1.text = PlayerPrefs.GetInt("FirstAdd", addMaxFactor1).ToString();
+        addMaxFactorTMP2.text = PlayerPrefs.GetInt("SecondAdd", addMaxFactor2).ToString();
         subToogle.isOn = PlayerPrefs.GetInt("SubBool", 1) == 1;
-        subMaxFactorTMP1.text = PlayerPrefs.GetInt("FirstSub", 21).ToString();
-        subMaxFactorTMP2.text = PlayerPrefs.GetInt("SecondSub", 11).ToString();
+        subMaxFactorTMP1.text = PlayerPrefs.GetInt("FirstSub", subMaxFactor1).ToString();
+        subMaxFactorTMP2.text = PlayerPrefs.GetInt("SecondSub", subMaxFactor2).ToString();
         multiplyToogle.isOn = PlayerPrefs.GetInt("MultyBool", 1) == 1;
-        multyMaxFactorTMP1.text = PlayerPrefs.GetInt("FirstMulty", 11).ToString();
-        multyMaxFactorTMP2.text = PlayerPrefs.GetInt("SecondMulty", 11).ToString();
+        multyMaxFactorTMP1.text = PlayerPrefs.GetInt("FirstMulty", multyMaxFactor1).ToString();
+        multyMaxFactorTMP2.text = PlayerPrefs.GetInt("SecondMulty", multyMaxFactor2).ToString();
         divToogle.isOn = PlayerPrefs.GetInt("DivBool", 1) == 1;
-        divMaxFactorTMP1.text = PlayerPrefs.GetInt("FirstDiv", 101).ToString();
-        divMaxFactorTMP2.text = PlayerPrefs.GetInt("SecondDiv", 11).ToString();
+        divMaxFactorTMP1.text = PlayerPrefs.GetInt("FirstDiv", divMaxFactor1).ToString();
+        divMaxFactorTMP2.text = PlayerPrefs.GetInt("SecondDiv", divMaxFactor2).ToString();
     }
 
     public void ResetSettings()
@@ -80,42 +94,42 @@ public class SettingsManager : MonoBehaviour
         switch (fieldname)
         {
             case "FirstAdd":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, addMaxFactor1);
                 value++;
                 PlayerPrefs.SetInt(fieldname, value);
                 break;
             case "FirstSub":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, subMaxFactor1);
                 value++;
                 PlayerPrefs.SetInt(fieldname, value);
                 break;
             case "FirstMulty":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, multyMaxFactor1);
                 value++;
                 PlayerPrefs.SetInt(fieldname, value);
                 break;
             case "FirstDiv":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, divMaxFactor1);
                 value++;
                 PlayerPrefs.SetInt(fieldname, value);
                 break;
             case "SecondAdd":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, addMaxFactor2);
                 value++;
                 PlayerPrefs.SetInt(fieldname, value);
                 break;
             case "SecondSub":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, subMaxFactor2);
                 value++;
                 PlayerPrefs.SetInt(fieldname, value);
                 break;
             case "SecondMulty":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, multyMaxFactor2);
                 value++;
                 PlayerPrefs.SetInt(fieldname, value);
                 break;
             case "SecondDiv":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, divMaxFactor2);
                 value++;
                 PlayerPrefs.SetInt(fieldname, value);
                 break;
@@ -130,7 +144,7 @@ public class SettingsManager : MonoBehaviour
         switch (fieldname)
         {
             case "FirstAdd":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, addMaxFactor1);
                 if (value > 1)
                 {
                     value--;
@@ -142,7 +156,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 break;
             case "FirstSub":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, subMaxFactor1);
                 if (value > 1)
                 {
                     value--;
@@ -154,7 +168,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 break;
             case "FirstMulty":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, multyMaxFactor1);
                 if (value > 1)
                 {
                     value--;
@@ -166,7 +180,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 break;
             case "FirstDiv":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, divMaxFactor1);
                 if (value > 1)
                 {
                     value--;
@@ -178,7 +192,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 break;
             case "SecondAdd":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, addMaxFactor2);
                 if (value > 1)
                 {
                     value--;
@@ -190,7 +204,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 break;
             case "SecondSub":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, subMaxFactor1);
                 if (value > 1)
                 {
                     value--;
@@ -202,7 +216,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 break;
             case "SecondMulty":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, multyMaxFactor2);
                 if (value > 1)
                 {
                     value--;
@@ -214,7 +228,7 @@ public class SettingsManager : MonoBehaviour
                 }
                 break;
             case "SecondDiv":
-                value = PlayerPrefs.GetInt(fieldname, 11);
+                value = PlayerPrefs.GetInt(fieldname, divMaxFactor2);
                 if (value > 2)
                 {
                     value--;
@@ -247,10 +261,7 @@ public class SettingsManager : MonoBehaviour
 
     private bool IsAnyToggleOn()
     {
-        return PlayerPrefs.GetInt("AddBool", 1) == 1 ||
-               PlayerPrefs.GetInt("SubBool", 0) == 1 ||
-               PlayerPrefs.GetInt("MultyBool", 0) == 1 ||
-               PlayerPrefs.GetInt("DivBool", 0) == 1;
+        return (addToogle.isOn || subToogle.isOn || multiplyToogle.isOn || divToogle.isOn);
     }
 
     private void SetToggleState(string playerPrefsKey, bool state)
@@ -273,5 +284,13 @@ public class SettingsManager : MonoBehaviour
                 divToogle.isOn = state;
                 break;
         }
+    }
+
+    public void OnMusicVolumeChanged(float value)
+    {
+        PlayerPrefs.SetFloat("MusicVolume", value);
+        AudioListener.volume = value;
+
+        Debug.Log("Громкость звуков "+value*100+"%");
     }
 }

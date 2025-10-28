@@ -12,6 +12,15 @@ public class ExampleGeneration : MonoBehaviour
     private string operation;
     private string example;
 
+    private int addMaxFactor1 = 10;
+    private int addMaxFactor2 = 10;
+    private int subMaxFactor1 = 20;
+    private int subMaxFactor2 = 10;
+    private int multyMaxFactor1 = 10;
+    private int multyMaxFactor2 = 10;
+    private int divMaxFactor1 = 100;
+    private int divMaxFactor2 = 10;
+
     public void StartGenaration()
     {
         randomGeneration();
@@ -51,8 +60,8 @@ public class ExampleGeneration : MonoBehaviour
     private void addition()
     {
         operation = "+";
-        firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstAdd", 11));
-        secongNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("SecondtAdd", 11));
+        firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstAdd", addMaxFactor1)+1);
+        secongNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("SecondtAdd", addMaxFactor2)+1);
         ResultOperation = firstNumber + secongNumber;
         example = $"{firstNumber} {operation} {secongNumber} = ";
         exampleTMP.text = example;
@@ -63,8 +72,8 @@ public class ExampleGeneration : MonoBehaviour
         operation = "-";
         while (secongNumber >= firstNumber)
         {
-            firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstSub", 21));
-            secongNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("SecondSub", 11));
+            firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstSub", subMaxFactor1)+1);
+            secongNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("SecondSub", subMaxFactor2)+1);
         }
         ResultOperation = firstNumber - secongNumber;
         example = $"{firstNumber} {operation} {secongNumber} = ";
@@ -73,8 +82,8 @@ public class ExampleGeneration : MonoBehaviour
     private void multiplication()
     {
         operation = "*";
-        firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstMulty", 11));
-        secongNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("SecondMulty", 11));
+        firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstMulty", multyMaxFactor1)+1);
+        secongNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("SecondMulty", multyMaxFactor2)+1);
         ResultOperation = firstNumber * secongNumber;
         example = $"{firstNumber} {operation} {secongNumber} = ";
         exampleTMP.text = example;
@@ -85,8 +94,8 @@ public class ExampleGeneration : MonoBehaviour
         operation = "/";
         do
         {
-            firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstDiv", 101));
-            secongNumber = UnityEngine.Random.Range(1, PlayerPrefs.GetInt("SecondDiv", 11));
+            firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstDiv", divMaxFactor1)+1);
+            secongNumber = UnityEngine.Random.Range(1, PlayerPrefs.GetInt("SecondDiv", divMaxFactor2)+1);
         } 
         while (firstNumber % secongNumber != 0);
 
