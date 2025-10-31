@@ -97,8 +97,7 @@ public class ExampleGeneration : MonoBehaviour
             firstNumber = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("FirstDiv", divMaxFactor1)+1);
             secongNumber = UnityEngine.Random.Range(1, PlayerPrefs.GetInt("SecondDiv", divMaxFactor2)+1);
         } 
-        while (firstNumber % secongNumber != 0);
-
+        while ((firstNumber % secongNumber != 0) || (firstNumber / secongNumber > 10));
         ResultOperation = firstNumber / secongNumber;
         example = $"{firstNumber} {operation} {secongNumber} = ";
         exampleTMP.text = example;
