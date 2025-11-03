@@ -19,6 +19,7 @@ public class Keyboard : MonoBehaviour
     [SerializeField] private AudioManagerMix audioManagerMix;
     [SerializeField] private AudioClip right;
     [SerializeField] private AudioClip wrong;
+    [SerializeField] private AnimationController animationController;
 
     private void Start()
     {
@@ -79,6 +80,7 @@ public class Keyboard : MonoBehaviour
                 nextButton.interactable = true;
                 checkButton.interactable = false;
                 audioManagerMix.PlayOneShot("Right");
+                animationController.HappyAnimation();
                 StartCoroutine(DisableAfterSeconds(disableTimePopup));
             }
             else if (answerResult != exampleGeneration.ResultOperation)
@@ -88,6 +90,7 @@ public class Keyboard : MonoBehaviour
                 nextButton.interactable = true;
                 checkButton.interactable = false;
                 audioManagerMix.PlayOneShot("Wrong");
+                animationController.SadAnimation();
                 StartCoroutine(DisableAfterSeconds(disableTimePopup));
             }
         }

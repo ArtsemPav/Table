@@ -1,0 +1,167 @@
+
+Alien.png
+size: 1446,505
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Head
+  rotate: false
+  xy: 2, 13
+  size: 518, 490
+  orig: 518, 490
+  offset: 0, 0
+  index: -1
+Light
+  rotate: false
+  xy: 1043, 39
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+angrySign
+  rotate: false
+  xy: 1173, 47
+  size: 106, 109
+  orig: 106, 109
+  offset: 0, 0
+  index: -1
+baseMouse
+  rotate: false
+  xy: 1165, 172
+  size: 35, 15
+  orig: 35, 15
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 522, 176
+  size: 193, 327
+  orig: 193, 327
+  offset: 0, 0
+  index: -1
+earLeft
+  rotate: false
+  xy: 717, 328
+  size: 278, 175
+  orig: 278, 175
+  offset: 0, 0
+  index: -1
+earRight
+  rotate: false
+  xy: 997, 328
+  size: 271, 175
+  orig: 271, 175
+  offset: 0, 0
+  index: -1
+excitedEyeLeft
+  rotate: false
+  xy: 709, 7
+  size: 165, 160
+  orig: 165, 160
+  offset: 0, 0
+  index: -1
+excitedEyeRight
+  rotate: false
+  xy: 876, 7
+  size: 165, 160
+  orig: 165, 160
+  offset: 0, 0
+  index: -1
+excitedMouse
+  rotate: true
+  xy: 1109, 2
+  size: 35, 48
+  orig: 35, 48
+  offset: 0, 0
+  index: -1
+eyeClose
+  rotate: true
+  xy: 1165, 189
+  size: 137, 62
+  orig: 137, 62
+  offset: 0, 0
+  index: -1
+happyCheckLeft
+  rotate: false
+  xy: 1281, 92
+  size: 97, 64
+  orig: 97, 64
+  offset: 0, 0
+  index: -1
+happyCheckRight
+  rotate: true
+  xy: 1380, 59
+  size: 97, 64
+  orig: 97, 64
+  offset: 0, 0
+  index: -1
+happyMouse
+  rotate: false
+  xy: 1281, 40
+  size: 77, 50
+  orig: 77, 50
+  offset: 0, 0
+  index: -1
+leftHand
+  rotate: false
+  xy: 1229, 238
+  size: 185, 78
+  orig: 186, 78
+  offset: 1, 0
+  index: -1
+nose
+  rotate: false
+  xy: 1202, 174
+  size: 25, 13
+  orig: 25, 13
+  offset: 0, 0
+  index: -1
+rightHand
+  rotate: false
+  xy: 1229, 158
+  size: 183, 78
+  orig: 183, 78
+  offset: 0, 0
+  index: -1
+sadEyeLeft
+  rotate: true
+  xy: 717, 169
+  size: 157, 222
+  orig: 157, 222
+  offset: 0, 0
+  index: -1
+sadEyeRight
+  rotate: true
+  xy: 941, 169
+  size: 157, 222
+  orig: 157, 222
+  offset: 0, 0
+  index: -1
+sadMouse
+  rotate: false
+  xy: 1043, 16
+  size: 64, 21
+  orig: 64, 21
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 1173, 6
+  size: 41, 39
+  orig: 41, 39
+  offset: 0, 0
+  index: -1
+usualEyeLeft
+  rotate: true
+  xy: 522, 5
+  size: 169, 185
+  orig: 169, 185
+  offset: 0, 0
+  index: -1
+usualEyeRight
+  rotate: false
+  xy: 1270, 318
+  size: 169, 185
+  orig: 169, 185
+  offset: 0, 0
+  index: -1
