@@ -1,10 +1,14 @@
-using Spine.Unity;
+﻿using Spine.Unity;
 using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
     [SerializeField] private SkeletonAnimation skeletonAnimation;
-    private Spine.AnimationState animationState;
+    [SerializeField] private string idleAnimation = "idle";
+    [SerializeField] private string sadAnimation = "Sad";
+    [SerializeField] private string happyAnimation = "Happy";
+    [SerializeField] private float defaultMixDuration = 2f;
+
     void Start()
     {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
@@ -13,6 +17,7 @@ public class AnimationController : MonoBehaviour
             Debug.LogError("SkeletonAnimation component not found on this GameObject!");
             enabled = false; // Disable the script if the component is missing
         }
+        skeletonAnimation.AnimationState.Data.DefaultMix = defaultMixDuration;
     }
     void OnEnable()
     {
@@ -21,20 +26,17 @@ public class AnimationController : MonoBehaviour
 
     public void IdleAnimation()
     {
-        skeletonAnimation.AnimationState.SetAnimation(0, "idle", true);
-        Debug.Log("idle Animation start");
+        skeletonAnimation.AnimationState.SetAnimation(0, idleAnimation, true);
     }
     public void SadAnimation()
     {
-        skeletonAnimation.AnimationState.SetAnimation(0, "Sad", false);
-        Debug.Log("Sad Animation start");
-        skeletonAnimation.AnimationState.AddAnimation(0, "idle", true,3);
+        skeletonAnimation.AnimationState.SetAnimation(0, sadAnimation, false);
+        skeletonAnimation.AnimationState.AddAnimation(0, idleAnimation, true, 0f);
     }
 
     public void HappyAnimation()
     {
-        skeletonAnimation.AnimationState.SetAnimation(0, "Happy", false);
-        Debug.Log("Happy Animation start");
-        skeletonAnimation.AnimationState.AddAnimation(0, "idle", true, 3);
+        skeletonAnimation.AnimationState.SetAnimation(0, happyAnimation, false);
+        skeletonAnimation.AnimationState.AddAnimation(0, idleAnimation, true, 0f);
     }
 }
