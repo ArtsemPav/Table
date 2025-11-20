@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Boot.unity
     guid: 6991d8871ba78334d94690d69d63ec08
   - enabled: 1
+    path: Assets/Scenes/IslandSelect.unity
+    guid: 8bad665ca067a94488e7b7abc3eb9e22
+  - enabled: 1
+    path: Assets/Scenes/LevelSelect.unity
+    guid: 866140e14ee96314ba3d05d318c2fb9a
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -23,10 +29,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: b1437971dfc6c4542bce22c50aad35af
-  - enabled: 1
-    path: Assets/Scenes/Shop.unity
-    guid: 866140e14ee96314ba3d05d318c2fb9a
-  - enabled: 1
-    path: Assets/Scenes/WorldMap.unity
-    guid: 8bad665ca067a94488e7b7abc3eb9e22
   m_configObjects: {}

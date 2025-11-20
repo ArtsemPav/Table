@@ -2,10 +2,10 @@ public enum SceneID
 {
     Boot,
     MainMenu,
-    WorldMap,
+    IslandSelect,
+    LevelSelect,
     Battle,
     Results,
-    Shop,
     Profile,
     Settings
 }
