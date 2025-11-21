@@ -41,8 +41,3 @@ public class LevelButtonUI : MonoBehaviour, IPointerClickHandler
         SceneController.Instance.LoadScene("Battle");
     }
 }
-
-public static class SelectedLevelHolder
-{
-    public static LevelConfig SelectedLevel;
-}

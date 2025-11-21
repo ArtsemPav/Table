@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 581419771}
   - component: {fileID: 581419770}
   - component: {fileID: 581419769}
+  - component: {fileID: 581419772}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -497,16 +498,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: eeff5d4ca2390d041b8ef4def515543c, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 581419772}
+        m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
+        m_MethodName: OnPlayClicked
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: IslandSelect
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &581419770
@@ -547,6 +548,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 581419767}
   m_CullTransparentMesh: 1
+--- !u!114 &581419772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581419767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9d2cf86ba07de642b1c5595e7eeac3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &625051168
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,7 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8b9e56ece88574fb277b4cd689441f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentIsland: {fileID: 11400000, guid: f769059f3b05a7040be2a59428c48be3, type: 2}
+  currentIsland: {fileID: 0}
   container: {fileID: 1148408440}
   levelButtonPrefab: {fileID: 238695863564211465, guid: 6d82fc9abd5f84e449cb2359fb9d7876, type: 3}
 --- !u!114 &625051170

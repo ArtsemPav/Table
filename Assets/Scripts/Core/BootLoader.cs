@@ -6,7 +6,9 @@ public class BootLoader : MonoBehaviour
     private void Start()
     {
         // короткая задержка для красоты/логов (можно убрать)
+        GameManager.Instance.AddQuestProgress("daily_login", 1);
         StartCoroutine(LoadNext());
+
     }
 
     private System.Collections.IEnumerator LoadNext()

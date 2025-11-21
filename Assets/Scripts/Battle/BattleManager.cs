@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
@@ -8,9 +9,9 @@ public class BattleManager : MonoBehaviour
     public LevelConfig levelConfig;
 
     [Header("UI")]
-    public Text taskText;
-    public InputField answerInput;
-    public Text timerText;
+    public TMP_Text taskText;
+    public TMP_InputField answerInput;
+    public TMP_Text timerText;
     public Slider bossHpBar;
     public Slider playerHpBar;
 
@@ -24,6 +25,11 @@ public class BattleManager : MonoBehaviour
     private bool _isBattleActive;
     private MathTask _currentTask;
 
+    private void Awake()
+    {
+        if (SelectedLevelHolder.SelectedLevel != null)
+            levelConfig = SelectedLevelHolder.SelectedLevel;
+    }
     private void Start()
     {
         ApplyLevelConfig();
@@ -156,12 +162,20 @@ public class BattleManager : MonoBehaviour
     {
         _isBattleActive = false;
 
+        int stars = 3; // можешь потом рассчитывать динамически
+
         if (GameManager.Instance != null && levelConfig != null)
         {
-            GameManager.Instance.SetStars(levelConfig.levelId, 3); // пока просто 3
+            GameManager.Instance.SetStars(levelConfig.levelId, stars);
             GameManager.Instance.AddCoins(levelConfig.baseCoinsReward);
             GameManager.Instance.AddXP(levelConfig.baseXpReward);
         }
+
+        BattleResultHolder.IsWin = true;
+        BattleResultHolder.Level = levelConfig;
+        BattleResultHolder.CoinsReward = levelConfig.baseCoinsReward;
+        BattleResultHolder.XpReward = levelConfig.baseXpReward;
+        BattleResultHolder.StarsEarned = stars;
 
         SceneController.Instance.LoadScene("Results");
     }
@@ -169,6 +183,13 @@ public class BattleManager : MonoBehaviour
     private void OnBattleLose()
     {
         _isBattleActive = false;
+
+        BattleResultHolder.IsWin = false;
+        BattleResultHolder.Level = levelConfig;
+        BattleResultHolder.CoinsReward = 0;
+        BattleResultHolder.XpReward = 0;
+        BattleResultHolder.StarsEarned = 0;
+
         SceneController.Instance.LoadScene("Results");
     }
 }

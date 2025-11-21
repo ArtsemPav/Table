@@ -49,8 +49,7 @@ public class SceneController : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        if (loadingScreen != null)
-            loadingScreen.SetActive(false);
+    //    if (loadingScreen != null) loadingScreen.SetActive(false);
 
         if (fadeImage != null)
         {

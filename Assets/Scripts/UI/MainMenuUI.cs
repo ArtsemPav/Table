@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class MainMenuUI : MonoBehaviour
 {
-    public void OnPlayClicked()
+    public void OnPlayClicked(string sceneName)
     {
-        SceneController.Instance.LoadScene("IslandSelect");
+        SceneController.Instance.LoadScene(sceneName);
     }
 
     public void OnQuitClicked()

@@ -32,7 +32,6 @@ public class IslandButtonUI : MonoBehaviour,
     private void Awake()
     {
         _baseScale = transform.localScale;
-        SelectedIslandHolder.SelectedIsland = _config;
     }
     public void Setup(IslandConfig config)
     {
@@ -135,7 +134,10 @@ public class IslandButtonUI : MonoBehaviour,
 
         // Load scene
         if (!string.IsNullOrEmpty(_config.sceneToLoad))
-            SceneController.Instance.LoadScene(_config.sceneToLoad);
+        {
+            SelectedIslandHolder.SelectedIsland = _config;
+            SceneController.Instance.LoadScene("LevelSelect");
+        }
         else
             Debug.LogWarning("Island has no sceneToLoad: " + _config.islandId);
     }
