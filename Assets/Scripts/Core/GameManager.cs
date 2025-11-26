@@ -86,9 +86,7 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    // -----------------------
-    // SAVE / LOAD
-    // -----------------------
+    #region Save_Load
 
     public void Save()
     {
@@ -116,9 +114,9 @@ public class GameManager : MonoBehaviour
             Data.unlockedModes.Add("story_mode");
     }
 
-    // -----------------------
-    // ECONOMY
-    // -----------------------
+    #endregion
+
+    #region Economy
 
     public void AddCoins(int amount)
     {
@@ -136,9 +134,9 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    // -----------------------
-    // XP / LEVEL
-    // -----------------------
+    #endregion
+
+    #region XPAndLevel
 
     public void AddXP(int amount)
     {
@@ -156,9 +154,9 @@ public class GameManager : MonoBehaviour
         CheckAchievements();
     }
 
-    // -----------------------
-    // LEVEL STARS
-    // -----------------------
+    #endregion
+
+    #region Stars
 
     public int GetStars(string levelId)
     {
@@ -203,9 +201,9 @@ public class GameManager : MonoBehaviour
         return c;
     }
 
-    // -----------------------
-    // ISLANDS & MODES
-    // -----------------------
+    #endregion
+
+    #region IslandAndModes
 
     public bool IsIslandUnlocked(string id) => Data.unlockedIslands.Contains(id);
     public void UnlockIsland(string id)
@@ -221,9 +219,9 @@ public class GameManager : MonoBehaviour
             Save();
     }
 
-    // -----------------------
-    // INVENTORY
-    // -----------------------
+    #endregion
+
+    #region Inventory
 
     public int GetItem(string id) =>
         Data.inventory.TryGetValue(id, out int count) ? count : 0;
@@ -246,9 +244,9 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    // -----------------------
-    // DAILY QUESTS
-    // -----------------------
+    #endregion
+
+    #region DailyQuest
 
     void GenerateDailyQuestsIfNeeded()
     {
@@ -301,11 +299,9 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    #endregion    // DAILY  DAILY QUESTS
 
-    // -----------------------
-    // ACHIEVEMENTS
-    // -----------------------
-
+    #region Achievements
     public void CheckAchievements()
     {
         foreach (var a in achievementDefs)
@@ -342,4 +338,5 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    #endregion
 }
