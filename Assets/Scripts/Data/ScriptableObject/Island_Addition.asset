@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d86dbc9d82f39f4cba4805265f0487b, type: 3}
   m_Name: Island_Addition
   m_EditorClassIdentifier: 
-  islandId: addition_island
+  islandId: add_island
   displayName: "\u0413\u043E\u0440\u0430 \u0441\u043B\u043E\u0436\u0435\u043D\u0438\u044F"
+  RequiredStarsToUnlock: 0
+  IsUnlocked: 1
   description: "\"\u0422\u0451\u043F\u043B\u044B\u0439 \u0441\u043E\u043B\u043D\u0435\u0447\u043D\u044B\u0439
     \u043E\u0441\u0442\u0440\u043E\u0432, \u043D\u0430 \u043A\u043E\u0442\u043E\u0440\u043E\u043C
     \u0438\u0433\u0440\u043E\u043A \u0438\u0437\u0443\u0447\u0430\u0435\u0442 \u0441\u043B\u043E\u0436\u0435\u043D\u0438\u0435
@@ -24,5 +26,6 @@ MonoBehaviour:
   lockedIcon: {fileID: 0}
   levels:
   - {fileID: 11400000, guid: b8e750e326f471843b11e4e43bf45a7a, type: 2}
+  - {fileID: 11400000, guid: b6431d4e7bca3274281fa3e0a3e81144, type: 2}
   - {fileID: 11400000, guid: 00af428d1577f1b41b13aebe44d44226, type: 2}
   sceneToLoad: LevelSelect

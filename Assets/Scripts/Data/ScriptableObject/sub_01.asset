@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3038e78a1eca0e646a90b967498a2e70, type: 3}
+  m_Name: sub_01
+  m_EditorClassIdentifier: 
+  levelId: sub_01
+  displayName: "\u0412\u044B\u0447\u0438\u0442\u0430\u043D\u0438\u0435 1-5"
+  levelKind: 0
+  taskType: 1
+  difficulty: 1
+  tasksCount: 5
+  minValue: 1
+  maxValue: 5
+  baseTime: 0
+  bossHp: 0
+  baseCoinsReward: 20
+  baseXpReward: 50

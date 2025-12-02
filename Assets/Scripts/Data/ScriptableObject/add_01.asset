@@ -17,10 +17,10 @@ MonoBehaviour:
   levelKind: 0
   taskType: 0
   difficulty: 1
-  tasksCount: 10
+  tasksCount: 5
   minValue: 1
-  maxValue: 10
-  baseTime: 60
+  maxValue: 5
+  baseTime: 0
   bossHp: 0
   baseCoinsReward: 20
   baseXpReward: 50

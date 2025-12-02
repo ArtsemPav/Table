@@ -11,6 +11,7 @@ public class IslandButtonUI : MonoBehaviour,
     public Image iconImage;
     public TMP_Text nameText;
     public TMP_Text progressText;
+    public TMP_Text TotalStarText;
     public Slider progressBar;
     public GameObject lockOverlay;
 
@@ -61,7 +62,7 @@ public class IslandButtonUI : MonoBehaviour,
             if (lockOverlay != null) lockOverlay.SetActive(true);
         }
 /*/
-  //      UpdateProgressUI();
+        UpdateProgressUI();
     }
 
     // ----------------------------
@@ -97,11 +98,11 @@ public class IslandButtonUI : MonoBehaviour,
         {
             foreach (var lvl in _config.levels)
             {
-   //             if (GameManager.Instance.GetStars(lvl.levelId) > 0)
-    //                completed++;
+                if (GameManager.Instance.GetStars(lvl.levelId) > 0)
+                    completed++;
             }
         }
-
+        TotalStarText.text = GameManager.Instance.GetTotalStars().ToString();
         progressBar.value = total > 0 ? (float)completed / total : 0f;
         progressText.text = $"{completed}/{total}";
     }
