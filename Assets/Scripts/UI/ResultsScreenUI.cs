@@ -11,18 +11,11 @@ public class ResultsScreenUI : MonoBehaviour
     public TMP_Text xpText;
 
     [Header("Stars")]
-    public Image[] starImages;
-    public Sprite starFilled;
-    public Sprite starEmpty;
-
-    [Header("Buttons")]
-    public Button retryButton;
-    public Button levelsButton;
+    public TMP_Text starsText;
 
     private void Start()
     {
         ApplyResult();
-        HookButtons();
     }
 
     private void ApplyResult()
@@ -53,47 +46,10 @@ public class ResultsScreenUI : MonoBehaviour
             xpText.text = isWin ? $"Опыт: +{xp}" : "Опыт: 0";
 
         // Звёзды
-        if (starImages != null && starImages.Length > 0)
+        
+        if (starsText != null)
         {
-            for (int i = 0; i < starImages.Length; i++)
-            {
-                if (starImages[i] == null) continue;
-
-                if (i < stars)
-                    starImages[i].sprite = starFilled;
-                else
-                    starImages[i].sprite = starEmpty;
-            }
+            starsText.text = new string('*', stars) + new string('-', 3 - stars);
         }
-    }
-
-    private void HookButtons()
-    {
-        if (retryButton != null)
-            retryButton.onClick.AddListener(OnRetryClicked);
-
-        if (levelsButton != null)
-            levelsButton.onClick.AddListener(OnLevelsClicked);
-    }
-
-    private void OnRetryClicked()
-    {
-        // переиграть тот же уровень
-        if (BattleResultHolder.Level != null)
-        {
-            SelectedLevelHolder.SelectedLevel = BattleResultHolder.Level;
-            SceneController.Instance.LoadScene("Battle");
-        }
-        else
-        {
-            // fallback
-            SceneController.Instance.LoadScene("Battle");
-        }
-    }
-
-    private void OnLevelsClicked()
-    {
-        // вернуться к выбору уровней текущего острова
-        SceneController.Instance.LoadScene("LevelSelect");
     }
 }

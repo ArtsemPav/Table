@@ -22,12 +22,12 @@ public class DailyQuestsScreenUI : MonoBehaviour
         foreach (Transform child in content)
             Destroy(child.gameObject);
 
-        var quests = GameManager.Instance.Data.dailyQuests;
+        var quests = SaveManager.Instance.playerData.dailyQuests;
 
         foreach (var q in quests)
         {
             var item = Instantiate(questItemPrefab, content);
-            item.Setup(q);
+  //          item.Setup(q);
         }
     }
 

@@ -33,9 +33,16 @@ public class LevelButtonUI : MonoBehaviour,
         _config = config;
         nameText.text = config.displayName;
 
-        int stars = GameManager.Instance != null
-            ? GameManager.Instance.GetStars(config.levelId)
-            : 0;
+        int stars;
+
+        if (GameManager.Instance != null)
+        {
+            stars = GameManager.Instance.GetStars(config.levelId);
+        }
+        else
+        {
+            stars = 0;
+        }
 
         starsText.text = new string('*', stars) + new string('-', 3 - stars);
 
@@ -82,7 +89,8 @@ public class LevelButtonUI : MonoBehaviour,
         StartCoroutine(ClickAnimation());
 
         // Load scene
-        SelectedLevelHolder.SelectedLevel = _config;
+        SaveManager.Instance.playerData.LastSelectedLevel = _config;
+        SaveManager.Instance.Save();
         SceneController.Instance.LoadScene("Battle");
     }
 

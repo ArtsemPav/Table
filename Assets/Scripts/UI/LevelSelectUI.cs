@@ -8,8 +8,8 @@ public class LevelSelectUI : MonoBehaviour
 
     private void Awake()
     {
-        if (SelectedIslandHolder.SelectedIsland != null)
-            currentIsland = SelectedIslandHolder.SelectedIsland;
+        if (SaveManager.Instance.playerData.LastSelectedIsLand != null)
+            currentIsland = SaveManager.Instance.playerData.LastSelectedIsLand;
     }
 
     private void Start()

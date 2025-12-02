@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Game.Data;
 
 public class DailyQuestItemUI : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class DailyQuestItemUI : MonoBehaviour
     public Button claimButton;
 
     private DailyQuest _quest;
-
+/*
     public void Setup(DailyQuest quest)
     {
         _quest = quest;
@@ -34,5 +35,5 @@ public class DailyQuestItemUI : MonoBehaviour
 
         // popup можно вызывать отсюда или через событие
         DailyQuestPopupUI.Show($"Получено: {_quest.reward} монет!");
-    }
+    }*/
 }

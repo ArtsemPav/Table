@@ -11,9 +11,10 @@ public class BattleManager : MonoBehaviour
     [Header("UI")]
     public TMP_Text taskText;
     public TMP_InputField answerInput;
-    public TMP_Text timerText;
+    public GameObject timer;
     public Slider bossHpBar;
     public Slider playerHpBar;
+    public TMP_Text bossHPText;
 
     [Header("Params")]
     public int playerMaxHp = 3;
@@ -21,17 +22,26 @@ public class BattleManager : MonoBehaviour
     private int _playerHp;
     private int _bossHp;
     private float _timeLeft;
+    private TMP_Text _timerText;
     private int _tasksSolved;
     private bool _isBattleActive;
     private MathTask _currentTask;
+    private int stars;
 
     private void Awake()
     {
-        if (SelectedLevelHolder.SelectedLevel != null)
-            levelConfig = SelectedLevelHolder.SelectedLevel;
+        if (SaveManager.Instance.playerData.LastSelectedLevel != null)
+            levelConfig = SaveManager.Instance.playerData.LastSelectedLevel;
     }
     private void Start()
     {
+        _timerText = timer.GetComponentInChildren<TMP_Text>();
+
+        if (_timerText == null)
+        {
+            Debug.LogError("timerText not find!");
+        }
+
         ApplyLevelConfig();
         StartBattle();
     }
@@ -48,6 +58,7 @@ public class BattleManager : MonoBehaviour
         _bossHp = levelConfig.levelKind == LevelKind.Boss
             ? levelConfig.bossHp
             : levelConfig.tasksCount;
+        bossHPText.text = _bossHp.ToString();
 
         _playerHp = playerMaxHp;
         _timeLeft = levelConfig.baseTime;
@@ -69,7 +80,15 @@ public class BattleManager : MonoBehaviour
         _isBattleActive = true;
         _tasksSolved = 0;
         NextTask();
-        StartCoroutine(TimerRoutine());
+        if (_timeLeft <= 0)
+        {
+            timer.SetActive(false);
+        }
+        else if (_timeLeft > 0)
+        {
+            timer.SetActive(true);
+            StartCoroutine(TimerRoutine());
+        }
     }
 
     private IEnumerator TimerRoutine()
@@ -77,8 +96,8 @@ public class BattleManager : MonoBehaviour
         while (_isBattleActive && _timeLeft > 0f)
         {
             _timeLeft -= Time.deltaTime;
-            if (timerText != null)
-                timerText.text = Mathf.CeilToInt(_timeLeft).ToString();
+            if (_timerText != null)
+                _timerText.text = Mathf.CeilToInt(_timeLeft).ToString();
             yield return null;
         }
 
@@ -130,7 +149,10 @@ public class BattleManager : MonoBehaviour
         _bossHp--;
 
         if (bossHpBar != null)
+        {
             bossHpBar.value = _bossHp;
+            bossHPText.text = _bossHp.ToString();
+        }
 
         if (_bossHp <= 0)
         {
@@ -148,6 +170,7 @@ public class BattleManager : MonoBehaviour
         if (playerHpBar != null)
             playerHpBar.value = _playerHp;
 
+
         if (_playerHp <= 0)
         {
             OnBattleLose();
@@ -161,13 +184,21 @@ public class BattleManager : MonoBehaviour
     private void OnBattleWin()
     {
         _isBattleActive = false;
-
-        int stars = 3; // можешь потом рассчитывать динамически
+        if (_playerHp == 3)
+        {
+            stars = 3;
+        } else if (_playerHp == 2)
+        {
+            stars = 2;
+        }
+        else if (_playerHp == 2)
+        {
+            stars = 1;
+        }
 
         if (GameManager.Instance != null && levelConfig != null)
         {
             GameManager.Instance.SetStars(levelConfig.levelId, stars);
-            GameManager.Instance.AddCoins(levelConfig.baseCoinsReward);
             GameManager.Instance.AddXP(levelConfig.baseXpReward);
         }
 

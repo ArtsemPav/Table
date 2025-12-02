@@ -378,23 +378,29 @@ MonoBehaviour:
   xpPerLevel: 100
   questTemplates:
   - id: daily_win
-    desc: WIn one Buttle
-    target: 1
-    progress: 0
-    reward: 50
-    completed: 0
+    title: 
+    description: 
+    rewardCoins: 0
+    rewardXP: 0
+    isCompleted: 0
+    currentProgress: 0
+    requiredProgress: 0
   - id: daily_tasks
-    desc: Solve 3 tasks
-    target: 30
-    progress: 0
-    reward: 40
-    completed: 0
+    title: 
+    description: 
+    rewardCoins: 0
+    rewardXP: 0
+    isCompleted: 0
+    currentProgress: 0
+    requiredProgress: 0
   - id: daily_levels
-    desc: Solve 2 levels
-    target: 2
-    progress: 0
-    reward: 40
-    completed: 0
+    title: 
+    description: 
+    rewardCoins: 0
+    rewardXP: 0
+    isCompleted: 0
+    currentProgress: 0
+    requiredProgress: 0
   achievementDefs:
   - id: Stars
     name: SUperStar
@@ -1110,10 +1116,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c07ace2e218c83b41812aa0f91a0da0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data:
+  playerData:
     coins: 0
     xp: 0
     level: 1
+    LastSelectedIsLand: {fileID: 0}
+    LastSelectedLevel: {fileID: 0}
+    settings:
+      masterVolume: 0.8
+      musicVolume: 0.7
+      sfxVolume: 0.8
+      musicEnabled: 1
+      sfxEnabled: 1
+      language: en
+      showTutorial: 1
+      showDamageNumbers: 1
+      showSubtitles: 1
+    LevelStarsData:
+      Keys: []
+      Values: 
+    UnlockedLevelsData:
+      Keys: []
+      Values: 
     dailyQuests: []
     dailyQuestDate: 
     totalDailyQuestsCompleted: 0

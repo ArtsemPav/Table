@@ -27,38 +27,37 @@ public class StatisticsScreenUI : MonoBehaviour
 
     private void ApplyStats()
     {
-        var gm = GameManager.Instance;
-        if (gm == null)
+        if (GameManager.Instance == null)
         {
             Debug.LogWarning("StatisticsScreenUI: GameManager.Instance is null");
             return;
         }
 
-        var data = gm.Data;
+        var data = SaveManager.Instance.playerData;
 
         // Уровень и XP
         if (playerLevelText != null)
             playerLevelText.text = $"Уровень: {data.level}";
 
         if (xpText != null)
-            xpText.text = $"Опыт: {data.xp} / {gm.xpPerLevel}";
+            xpText.text = $"Опыт: {data.xp} / {GameManager.Instance.xpPerLevel}";
 
         // Монеты
         if (coinsText != null)
             coinsText.text = $"Монеты: {data.coins}";
 
         // Звезды
-        int totalStars = gm.GetTotalStars();
+        int totalStars = GameManager.Instance.GetTotalStars();
         if (starsText != null)
             starsText.text = $"Звёзды: {totalStars}";
 
         // Пройденные уровни
-        int completedLevels = gm.GetCompletedLevelsCount();
+        int completedLevels = GameManager.Instance.GetCompletedLevelsCount();
         if (levelsCompletedText != null)
             levelsCompletedText.text = $"Пройдено уровней: {completedLevels}";
 
         // Побежденные боссы
-        int bosses = gm.GetBossesDefeatedCount();
+        int bosses = GameManager.Instance.GetBossesDefeatedCount();
         if (bossesText != null)
             bossesText.text = $"Побеждено боссов: {bosses}";
 
@@ -68,18 +67,18 @@ public class StatisticsScreenUI : MonoBehaviour
             dailyQuestsText.text = $"Выполнено ежедневных заданий: {totalDailies}";
 
         // Острова
-        int unlockedIslands = data.unlockedIslands != null ? data.unlockedIslands.Count : 0;
+ /*       int unlockedIslands = data.unlockedIslands != null ? data.unlockedIslands.Count : 0;
         if (islandsText != null)
         {
             if (totalIslandsPlanned > 0)
                 islandsText.text = $"Острова: {unlockedIslands} / {totalIslandsPlanned}";
             else
                 islandsText.text = $"Острова: {unlockedIslands}";
-        }
+        }*/
 
         // Достижения
         int unlockedAch = data.unlockedAchievements != null ? data.unlockedAchievements.Count : 0;
-        int totalAchDefs = gm.achievementDefs != null ? gm.achievementDefs.Count : totalAchievementsPlanned;
+        int totalAchDefs = GameManager.Instance.achievementDefs != null ? GameManager.Instance.achievementDefs.Count : totalAchievementsPlanned;
 
         if (achievementsText != null)
         {

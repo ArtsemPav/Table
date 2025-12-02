@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using Game.Data;
 
 public class AchievementPopupUI : MonoBehaviour
 {

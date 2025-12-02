@@ -11,7 +11,7 @@ public class SetStars : MonoBehaviour
 
     public void Ach2()
     {
-        GameManager.Instance.AddQuestProgress("daily_math_01", 1);
+    //    GameManager.Instance.AddQuestProgress("daily_math_01", 1);
     }
 
     public void Ach3()

@@ -21,7 +21,7 @@ public class IslandButtonUI : MonoBehaviour,
     public float clickDuration = 0.12f;
 
     private IslandConfig _config;
-    private bool _isUnlocked;
+    private bool _isUnlocked = true;
     private bool _hover;
     private Vector3 _baseScale;
 
@@ -43,7 +43,7 @@ public class IslandButtonUI : MonoBehaviour,
         }
 
         nameText.text = config.displayName;
-
+/*
         // Check unlock
         _isUnlocked = GameManager.Instance == null
             ? true
@@ -60,8 +60,8 @@ public class IslandButtonUI : MonoBehaviour,
                 iconImage.sprite = config.lockedIcon;
             if (lockOverlay != null) lockOverlay.SetActive(true);
         }
-
-        UpdateProgressUI();
+/*/
+  //      UpdateProgressUI();
     }
 
     // ----------------------------
@@ -97,8 +97,8 @@ public class IslandButtonUI : MonoBehaviour,
         {
             foreach (var lvl in _config.levels)
             {
-                if (GameManager.Instance.GetStars(lvl.levelId) > 0)
-                    completed++;
+   //             if (GameManager.Instance.GetStars(lvl.levelId) > 0)
+    //                completed++;
             }
         }
 
@@ -135,7 +135,8 @@ public class IslandButtonUI : MonoBehaviour,
         // Load scene
         if (!string.IsNullOrEmpty(_config.sceneToLoad))
         {
-            SelectedIslandHolder.SelectedIsland = _config;
+            SaveManager.Instance.playerData.LastSelectedIsLand = _config;
+            SaveManager.Instance.Save();
             SceneController.Instance.LoadScene("LevelSelect");
         }
         else
