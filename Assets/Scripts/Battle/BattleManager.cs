@@ -198,8 +198,8 @@ public class BattleManager : MonoBehaviour
 
         if (GameManager.Instance != null && levelConfig != null)
         {
-            GameManager.Instance.SetStars(levelConfig.levelId, stars);
-            GameManager.Instance.AddXP(levelConfig.baseXpReward);
+   //         GameManager.Instance.SetStars(levelConfig.levelId, stars);
+   //         GameManager.Instance.AddXP(levelConfig.baseXpReward);
         }
 
         BattleResultHolder.IsWin = true;

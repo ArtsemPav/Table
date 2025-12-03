@@ -6,7 +6,7 @@ public class SetStars : MonoBehaviour
 {
     public void Ach1()
     {
-        GameManager.Instance.SetStars("add_01", 3);
+  //      GameManager.Instance.SetStars("add_01", 3);
     }
 
     public void Ach2()
@@ -16,6 +16,6 @@ public class SetStars : MonoBehaviour
 
     public void Ach3()
     {
-        GameManager.Instance.AddXP(100);
+ //       GameManager.Instance.AddXP(100);
     }
 }

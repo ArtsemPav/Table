@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.IO;
 using Game.Data;
 
@@ -17,13 +18,18 @@ public class SaveManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             savePath = Path.Combine(Application.persistentDataPath, "save.json");
             Load();
+            Addislands();
         }
         else Destroy(gameObject);
     }
 
-    public PlayerData GetPlayerData()
+    private void Addislands()
     {
-        return playerData;
+        foreach (var island in GameManager.Instance.islands)
+        {
+            playerData.AddNewIsland(island, true);
+        }
+        Save();
     }
 
     public void Save()
@@ -33,8 +39,6 @@ public class SaveManager : MonoBehaviour
             Debug.LogWarning("Data is null, creating new...");
             playerData = new PlayerData();
         }
-
-        playerData.PrepareForSerialization();
         string json = JsonUtility.ToJson(playerData, true);
         File.WriteAllText(savePath, json);
         Debug.Log("Игра сохранена: " + savePath);
@@ -46,21 +50,16 @@ public class SaveManager : MonoBehaviour
         {
             string json = File.ReadAllText(savePath);
             playerData = JsonUtility.FromJson<PlayerData>(json);
-            if (playerData != null)
-            {
-                playerData.PrepareForSerialization(); // Инициализирует словари
-            }
-            else
-            {
-                Debug.LogWarning("Loaded data is null, creating new...");
-                playerData = new PlayerData();
-            }
             Debug.Log("Игра загружена");
         }
         else
         {
-            playerData = new PlayerData();
+            playerData = PlayerData.CreateNew();
             Debug.Log("Созданы новые данные игрока");
+            string json = JsonUtility.ToJson(playerData, true);
+            File.WriteAllText(savePath, json);
+            Debug.Log("Файл создан: " + savePath);
+
         }
     }
 

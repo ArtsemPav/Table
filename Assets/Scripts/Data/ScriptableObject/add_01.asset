@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelId: add_01
   displayName: "\u0421\u043B\u043E\u0436\u0435\u043D\u0438\u0435 1-5"
+  isUnlocked: 1
   levelKind: 0
   taskType: 0
   difficulty: 1

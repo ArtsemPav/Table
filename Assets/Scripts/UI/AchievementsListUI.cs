@@ -10,8 +10,8 @@ public class AchievementsListUI : MonoBehaviour
         foreach (var a in GameManager.Instance.achievementDefs)
         {
             var item = Instantiate(itemPrefab, content);
-            bool unlocked = SaveManager.Instance.playerData.unlockedAchievements.Contains(a.id);
-            item.Setup(a, unlocked);
+  //          bool unlocked = SaveManager.Instance.playerData.unlockedAchievements.Contains(a.id);
+   //         item.Setup(a, unlocked);
         }
     }
 }

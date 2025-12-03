@@ -23,6 +23,7 @@ public class LevelConfig : ScriptableObject
     [Header("ID")]
     public string levelId;          // "add_01", "boss_golem_01"
     public string displayName;      // "Сложение: до 10"
+    public bool isUnlocked;
     public LevelKind levelKind;
 
     [Header("Math")]

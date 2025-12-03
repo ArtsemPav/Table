@@ -22,9 +22,9 @@ public class StatisticsScreenUI : MonoBehaviour
 
     private void Start()
     {
-        ApplyStats();
+   //     ApplyStats();
     }
-
+    /*
     private void ApplyStats()
     {
         if (GameManager.Instance == null)
@@ -74,7 +74,7 @@ public class StatisticsScreenUI : MonoBehaviour
                 islandsText.text = $"Острова: {unlockedIslands} / {totalIslandsPlanned}";
             else
                 islandsText.text = $"Острова: {unlockedIslands}";
-        }*/
+        }
 
         // Достижения
         int unlockedAch = data.unlockedAchievements != null ? data.unlockedAchievements.Count : 0;
@@ -98,5 +98,5 @@ public class StatisticsScreenUI : MonoBehaviour
     public void OnBackButton()
     {
         SceneController.Instance.LoadScene("MainMenu");
-    }
+    }*/
 }

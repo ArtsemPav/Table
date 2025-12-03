@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 using TMPro;
+using Game.Data;
 
 public class IslandButtonUI : MonoBehaviour,
     IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
@@ -25,6 +26,7 @@ public class IslandButtonUI : MonoBehaviour,
     private bool _isUnlocked = true;
     private bool _hover;
     private Vector3 _baseScale;
+    private IslandProgressData _islandProgressData;
 
     // ----------------------------
     // INIT
@@ -37,18 +39,16 @@ public class IslandButtonUI : MonoBehaviour,
     public void Setup(IslandConfig config)
     {
         _config = config;
+        _islandProgressData = SaveManager.Instance.playerData.GetIslandProgress(_config.islandId);
         if (config == null)
         {
             Debug.LogError("IslandButtonUI: Setup() got NULL config!");
             return;
         }
-
         nameText.text = config.displayName;
-/*
+
         // Check unlock
-        _isUnlocked = GameManager.Instance == null
-            ? true
-            : GameManager.Instance.IsIslandUnlocked(config.islandId);
+        _isUnlocked = _islandProgressData.isUnlocked;
 
         if (_isUnlocked)
         {
@@ -61,7 +61,6 @@ public class IslandButtonUI : MonoBehaviour,
                 iconImage.sprite = config.lockedIcon;
             if (lockOverlay != null) lockOverlay.SetActive(true);
         }
-/*/
         UpdateProgressUI();
     }
 
@@ -98,11 +97,11 @@ public class IslandButtonUI : MonoBehaviour,
         {
             foreach (var lvl in _config.levels)
             {
-                if (GameManager.Instance.GetStars(lvl.levelId) > 0)
-                    completed++;
+  //              if (GameManager.Instance.GetStars(lvl.levelId) > 0)
+  //                  completed++;
             }
         }
-        TotalStarText.text = GameManager.Instance.GetTotalStars().ToString();
+        TotalStarText.text = _islandProgressData.totalStars.ToString();
         progressBar.value = total > 0 ? (float)completed / total : 0f;
         progressText.text = $"{completed}/{total}";
     }

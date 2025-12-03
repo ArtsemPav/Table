@@ -6,6 +6,7 @@ public class IslandConfig : ScriptableObject
     [Header("ID & Name")]
     public string islandId;          // "addition_island"
     public string displayName;       // "Остров Сложения"
+    public bool isUnlocked;
     [TextArea] public string description;
 
     [Header("Visual")]

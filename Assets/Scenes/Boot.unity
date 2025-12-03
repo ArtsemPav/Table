@@ -375,37 +375,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb11d5fc7a7e6724cb52b784b229cb31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  islands:
+  - {fileID: 11400000, guid: f769059f3b05a7040be2a59428c48be3, type: 2}
+  - {fileID: 11400000, guid: 6151bf9d009869f4ab05605671e351da, type: 2}
+  defaultIslandConfig: {fileID: 11400000, guid: f769059f3b05a7040be2a59428c48be3, type: 2}
+  defaultLevelConfig: {fileID: 11400000, guid: b8e750e326f471843b11e4e43bf45a7a, type: 2}
   xpPerLevel: 100
-  questTemplates:
-  - id: daily_win
-    title: 
-    description: 
-    rewardCoins: 0
-    rewardXP: 0
-    isCompleted: 0
-    currentProgress: 0
-    requiredProgress: 0
-  - id: daily_tasks
-    title: 
-    description: 
-    rewardCoins: 0
-    rewardXP: 0
-    isCompleted: 0
-    currentProgress: 0
-    requiredProgress: 0
-  - id: daily_levels
-    title: 
-    description: 
-    rewardCoins: 0
-    rewardXP: 0
-    isCompleted: 0
-    currentProgress: 0
-    requiredProgress: 0
-  achievementDefs:
-  - id: Stars
-    name: SUperStar
-    type: 0
-    value: 1
+  questTemplates: []
+  achievementDefs: []
 --- !u!1 &995524930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,30 +1094,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData:
-    coins: 0
-    xp: 0
-    level: 1
-    LastSelectedIsLand: {fileID: 0}
+    totalCoins: 0
+    totalXp: 0
+    playerLevel: 0
     LastSelectedLevel: {fileID: 0}
-    settings:
-      masterVolume: 0.8
-      musicVolume: 0.7
-      sfxVolume: 0.8
-      musicEnabled: 1
-      sfxEnabled: 1
-      language: en
-      showTutorial: 1
-      showDamageNumbers: 1
-      showSubtitles: 1
-    LevelStarsData:
-      Keys: []
-      Values: 
-    UnlockedLevelsData:
-      Keys: []
-      Values: 
-    dailyQuests: []
-    dailyQuestDate: 
-    totalDailyQuestsCompleted: 0
+    LastSelectedIsLand: {fileID: 0}
+    islandsProgress: []
+    totalPlayTime: 0
+    totalLevelsCompleted: 0
 --- !u!1 &1601120879
 GameObject:
   m_ObjectHideFlags: 0

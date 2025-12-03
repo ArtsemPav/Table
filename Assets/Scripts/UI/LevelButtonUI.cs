@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 using TMPro;
+using Game.Data;
 
 public class LevelButtonUI : MonoBehaviour,
     IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
@@ -23,6 +24,9 @@ public class LevelButtonUI : MonoBehaviour,
     private bool _hover;
     private Vector3 _baseScale;
 
+    private LevelProgressData _levelProgressData;
+    private IslandConfig _islandConfig;
+
     private void Awake()
     {
         _baseScale = transform.localScale;
@@ -30,26 +34,29 @@ public class LevelButtonUI : MonoBehaviour,
 
     public void Setup(LevelConfig config)
     {
+        _islandConfig = SaveManager.Instance.playerData.LastSelectedIsLand;
         _config = config;
+        _levelProgressData = SaveManager.Instance.playerData.GetLevelProgress(_islandConfig.islandId, _config.levelId);
         nameText.text = config.displayName;
 
-        int stars;
-
-        if (GameManager.Instance != null)
-        {
-            stars = GameManager.Instance.GetStars(config.levelId);
-        }
-        else
-        {
-            stars = 0;
-        }
+        int stars = _levelProgressData.starsEarned;
 
         starsText.text = new string('*', stars) + new string('-', 3 - stars);
 
-        // логику unlock можно сделать простой: все первые уровни открыты
-        _isUnlocked = true; // либо через GameManager, если хочешь условия
+        // Check unlock
+        _isUnlocked = _levelProgressData.isUnlocked;
 
-        lockOverlay.SetActive(!_isUnlocked);
+        if (_isUnlocked)
+        {
+     //       iconImage.sprite = config.icon;
+            if (lockOverlay != null) lockOverlay.SetActive(false);
+        }
+        else
+        {
+     //       if (config.lockedIcon != null)
+     //           iconImage.sprite = config.lockedIcon;
+            if (lockOverlay != null) lockOverlay.SetActive(true);
+        }
     }
     // ----------------------------
     // UPDATE (hover animation)

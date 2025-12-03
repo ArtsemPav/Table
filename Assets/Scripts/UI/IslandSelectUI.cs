@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
+using Game.Data;
 
 public class IslandSelectUI : MonoBehaviour
 {
-    [Header("Data")]
-    public IslandConfig[] islands;        // задать в инспекторе
+ //   [Header("Data")]
+ //   public IslandConfig[] islands;        // задать в инспекторе
 
     [Header("UI")]
     public Transform container;           // родитель для кнопок (Grid/Horizontal Layout Group)
     public IslandButtonUI islandButtonPrefab;
+
+    private readonly IslandConfig[] islands = GameManager.Instance.islands;
 
     private void Start()
     {

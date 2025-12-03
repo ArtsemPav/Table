@@ -7,17 +7,9 @@ using Game.Data;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public PlayerData Data
-    {
-        get
-        {
-            if (SaveManager.Instance != null)
-                return SaveManager.Instance.playerData;
 
-            Debug.LogError("SaveManager не доступен!");
-            return null;
-        }
-    }
+    [Header("Islands configs")]
+    public IslandConfig[] islands;
 
     [Header("Gameplay XP")]
     public int xpPerLevel = 100;
@@ -36,6 +28,8 @@ public class GameManager : MonoBehaviour
     public event Action OnDailyQuestsUpdated;
     public event Action<AchievementDef> OnAchievementUnlocked;
 
+    public PlayerData playerData = SaveManager.Instance.playerData;
+
     string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
 
     private void Awake()
@@ -51,63 +45,31 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    #region Save_Load
-
- /*   void EnsureDefaultUnlocks()
-    {
-        if (Data.unlockedIslands.Count == 0)
-            Data.unlockedIslands.Add("addition_island");
-
-        if (Data.unlockedModes.Count == 0)
-            Data.unlockedModes.Add("story_mode");
-    }*/
-
-    #endregion
-
-    #region Economy
-    /*
-    public void AddCoins(int amount)
-    {
-        Data.coins += amount;
-        OnCoinsChanged?.Invoke(Data.coins);
-        Save();
-    }
-
-    public bool SpendCoins(int amount)
-    {
-        if (Data.coins < amount) return false;
-        Data.coins -= amount;
-        OnCoinsChanged?.Invoke(Data.coins);
-        Save();
-        return true;
-    }
-    */
-    #endregion
-
     #region XPAndLevel
-
+ /*   
     public void AddXP(int amount)
     {
-        Data.xp += amount;
-        OnXPChanged?.Invoke(Data.xp);
+        playerData.totalXp += amount;
+        OnXPChanged?.Invoke(playerData.totalXp);
 
-        while (Data.xp >= xpPerLevel)
+        while (playerData.totalXp >= xpPerLevel)
         {
-            Data.xp -= xpPerLevel;
-            Data.level++;
-            OnLevelChanged?.Invoke(Data.level);
+            playerData.totalXp -= xpPerLevel;
+            playerData.playerLevel++;
+            OnLevelChanged?.Invoke(playerData.playerLevel);
         }
 
         SaveManager.Instance.Save();
   //      CheckAchievements();
     }
-
+*/
     #endregion
 
     #region Stars
-
+    /*
     public int GetStars(string levelId)
     {
+        
         if (SaveManager.Instance.playerData.LevelStars.TryGetValue(levelId, out int stars))
         {
             return stars; // Уровень найден - возвращаем звёзды
@@ -117,7 +79,7 @@ public class GameManager : MonoBehaviour
             return 0; // Уровень не найден - возвращаем 0
         }
     }
- 
+ /*
     public void SetStars(string levelId, int stars)
     {
         stars = Mathf.Clamp(stars, 0, 3);
