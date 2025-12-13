@@ -336,9 +336,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7251837df31f4194eabebfc0b28369a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 4419833510879937437}
-  starsText: {fileID: 9176916515136811098}
-  lockOverlay: {fileID: 171299095960455773}
+  _nameText: {fileID: 4419833510879937437}
+  _starsText: {fileID: 9176916515136811098}
+  _lockOverlay: {fileID: 171299095960455773}
+  _hoverScale: 1.05
+  _hoverSpeed: 8
+  _clickScale: 1.15
+  _clickDuration: 0.12
 --- !u!1 &6313240132186537684
 GameObject:
   m_ObjectHideFlags: 0

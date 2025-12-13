@@ -360,12 +360,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920e3f8a0534ce84fa9dfae1107fde09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultTitleText: {fileID: 321863691}
-  levelNameText: {fileID: 2145705236}
-  coinsText: {fileID: 1752142864}
-  xpText: {fileID: 863922064}
-  starsText: {fileID: 1900803796}
-  retryButton: {fileID: 1138908679}
+  _resultTitleText: {fileID: 321863691}
+  _levelNameText: {fileID: 2145705236}
+  _coinsText: {fileID: 1752142864}
+  _xpText: {fileID: 863922064}
+  _starsText: {fileID: 1900803796}
 --- !u!4 &354128121
 Transform:
   m_ObjectHideFlags: 0

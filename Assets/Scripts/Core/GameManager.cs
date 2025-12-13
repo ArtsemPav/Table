@@ -6,10 +6,11 @@ using Game.Data;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
+    public PlayerData PlayerData { get; private set; }
 
     [Header("Islands configs")]
-    public IslandConfig[] islands;
+    public IslandConfig[] IslandsList;
 
     [Header("Gameplay XP")]
     public int xpPerLevel = 100;
@@ -28,97 +29,74 @@ public class GameManager : MonoBehaviour
     public event Action OnDailyQuestsUpdated;
     public event Action<AchievementDef> OnAchievementUnlocked;
 
-    public PlayerData playerData = SaveManager.Instance.playerData;
-
-    string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
-
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-    //        EnsureDefaultUnlocks();
-    //        GenerateDailyQuestsIfNeeded();
-     //       CheckAchievements();
+            //        EnsureDefaultUnlocks();
+            //        GenerateDailyQuestsIfNeeded();
+            //       CheckAchievements();
         }
         else Destroy(gameObject);
     }
 
-    #region XPAndLevel
- /*   
-    public void AddXP(int amount)
+    private void Start()
     {
-        playerData.totalXp += amount;
-        OnXPChanged?.Invoke(playerData.totalXp);
-
-        while (playerData.totalXp >= xpPerLevel)
+        if (SaveManager.Instance == null)
         {
-            playerData.totalXp -= xpPerLevel;
-            playerData.playerLevel++;
-            OnLevelChanged?.Invoke(playerData.playerLevel);
+            Debug.LogError("SaveManager должен быть инициализирован перед GameManager!");
+            return;
         }
 
-        SaveManager.Instance.Save();
-  //      CheckAchievements();
+        Initialize();
     }
-*/
-    #endregion
-
-    #region Stars
-    /*
-    public int GetStars(string levelId)
+    private void Initialize()
     {
-        
-        if (SaveManager.Instance.playerData.LevelStars.TryGetValue(levelId, out int stars))
+        // Теперь SaveManager.Instance уже должен существовать
+        if (SaveManager.Instance != null)
         {
-            return stars; // Уровень найден - возвращаем звёзды
+            PlayerData = SaveManager.Instance.PlayerData;
+
+            // Инициализируем острова
+            if (PlayerData != null && IslandsList != null)
+            {
+                foreach (var island in IslandsList)
+                {
+                    PlayerData.AddNewIsland(island, true);
+                }
+                SaveManager.Instance.Save(PlayerData);
+            }
         }
         else
         {
-            return 0; // Уровень не найден - возвращаем 0
-        }
-    }
- /*
-    public void SetStars(string levelId, int stars)
-    {
-        stars = Mathf.Clamp(stars, 0, 3);
-
-        if (!SaveManager.Instance.playerData.LevelStars.ContainsKey(levelId) || Data.LevelStars[levelId] < stars)
-        {
-            SaveManager.Instance.playerData.LevelStars[levelId] = stars;
-            OnStarsChanged?.Invoke();
-            SaveManager.Instance.Save();
-            //    CheckAchievements();
+            Debug.LogError("SaveManager not initialized!");
         }
     }
 
-    public int GetTotalStars()
+    public IslandConfig GetLastIslandConfig()
     {
-        int s = 0;
-        foreach (var kvp in Data.LevelStars)
-            s += kvp.Value;
-        return s;
+        IslandConfig _islandConfig = PlayerData.LastSelectedIsLand;
+        return _islandConfig;
     }
 
-    public int GetCompletedLevelsCount()
+    public LevelConfig GetLastLevelConfig()
     {
-        int c = 0;
-        foreach (var kvp in Data.LevelStars)
-            if (kvp.Value > 0) c++;
-        return c;
+        LevelConfig _levelConfig = PlayerData.LastSelectedLevel;
+        return _levelConfig;
     }
 
+/*
     public int GetBossesDefeatedCount()
     {
         int c = 0;
-        foreach (var kvp in Data.LevelStars)
+        foreach (var kvp in PlayerData.LevelStars)
             if (kvp.Key.StartsWith("boss_") && kvp.Value > 0)
                 c++;
         return c;
-    }
+    }*/
 
-    #endregion
 
     #region IslandAndModes
 

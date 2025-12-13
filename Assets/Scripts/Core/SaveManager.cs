@@ -5,10 +5,10 @@ using Game.Data;
 
 public class SaveManager : MonoBehaviour
 {
-    public static SaveManager Instance;
-
-    public PlayerData playerData;
-    private string savePath;
+    public static SaveManager Instance { get; private set; }
+    public PlayerData PlayerData { get; private set; }
+    
+    private string _savePath;
 
     private void Awake()
     {
@@ -16,50 +16,45 @@ public class SaveManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            savePath = Path.Combine(Application.persistentDataPath, "save.json");
+            _savePath = Path.Combine(Application.persistentDataPath, "save.json");
             Load();
-            Addislands();
+            // Подписываемся на события жизненного цикла приложения
+            Application.focusChanged += OnApplicationFocusChanged;
         }
         else Destroy(gameObject);
     }
 
     private void Addislands()
     {
-        foreach (var island in GameManager.Instance.islands)
+        foreach (var island in GameManager.Instance.IslandsList)
         {
-            playerData.AddNewIsland(island, true);
+            PlayerData.AddNewIsland(island, true);
         }
-        Save();
     }
 
-    public void Save()
+    public void Save(PlayerData _playerData)
     {
-        if (playerData == null)
+        if (_playerData == null)
         {
-            Debug.LogWarning("Data is null, creating new...");
-            playerData = new PlayerData();
+            _playerData = PlayerData;
         }
-        string json = JsonUtility.ToJson(playerData, true);
-        File.WriteAllText(savePath, json);
-        Debug.Log("Игра сохранена: " + savePath);
+        string json = JsonUtility.ToJson(_playerData, true);
+        File.WriteAllText(_savePath, json);
+        Debug.Log("Игра сохранена: " + _savePath);
     }
 
     public void Load()
     {
-        if (File.Exists(savePath))
+        if (File.Exists(_savePath))
         {
-            string json = File.ReadAllText(savePath);
-            playerData = JsonUtility.FromJson<PlayerData>(json);
+            string json = File.ReadAllText(_savePath);
+            PlayerData = JsonUtility.FromJson<PlayerData>(json);
             Debug.Log("Игра загружена");
         }
         else
         {
-            playerData = PlayerData.CreateNew();
-            Debug.Log("Созданы новые данные игрока");
-            string json = JsonUtility.ToJson(playerData, true);
-            File.WriteAllText(savePath, json);
-            Debug.Log("Файл создан: " + savePath);
-
+            PlayerData = PlayerData.CreateNew();
+            Debug.LogWarning("Data is null, creating new...");
         }
     }
 
@@ -67,7 +62,7 @@ public class SaveManager : MonoBehaviour
     {
         // Сбросить только настройки, но не прогресс
   //      Data.settings = new GameSettings(); // если есть отдельный класс настроек
-        Save();
+        Save(PlayerData);
     }
 
     public void ResetProgressOnly()
@@ -77,14 +72,14 @@ public class SaveManager : MonoBehaviour
    //     Data.coins = 0;
   //      Data.inventory.Clear();
         // ... другие поля прогресса
-        Save();
+        Save(PlayerData);
     }
 
     public void ResetEverything()
     {
         // Полный сброс
-        playerData = new PlayerData();
-        Save();
+        PlayerData = new PlayerData();
+        Save(PlayerData);
 
         // Обновить все системы игры
    //     OnResetComplete();
@@ -95,4 +90,55 @@ public class SaveManager : MonoBehaviour
         // Уведомить другие системы о сбросе
         // Например, обновить UI, загрузить первую сцену и т.д.
     }
+
+    #region События жизненного цикла приложения
+
+    // Вызывается при изменении фокуса приложения
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            // При потере фокуса (переход в фон, минимизация) - сохраняем
+            Debug.Log("Application lost focus - auto saving...");
+            Save(PlayerData);
+        }
+    }
+
+    // Вызывается при изменении фокуса (альтернативный подход)
+    private void OnApplicationFocusChanged(bool focused)
+    {
+        if (!focused)
+        {
+            Debug.Log("Application focus changed - auto saving...");
+            Save(PlayerData);
+        }
+    }
+
+    // Вызывается при паузе приложения (мобильные устройства)
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            Debug.Log("Application paused - auto saving...");
+            Save(PlayerData);
+        }
+        else
+        {
+            // При возобновлении можно проверить целостность данных
+            Debug.Log("Application resumed");
+    //        CheckDataIntegrity();
+        }
+    }
+
+    // Вызывается при выходе из игры
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Application quitting - final save...");
+        Save(PlayerData);
+
+        // Отписываемся от событий
+        Application.focusChanged -= OnApplicationFocusChanged;
+    }
+
+    #endregion
 }

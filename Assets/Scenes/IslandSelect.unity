@@ -122,68 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &52818932
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 52818933}
-  - component: {fileID: 52818934}
-  m_Layer: 5
-  m_Name: IslandContainer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &52818933
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52818932}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 676619814}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 61, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &52818934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52818932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &496446865
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,11 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d7dd85e9c58f946a20504173f6dbd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  islands:
-  - {fileID: 11400000, guid: f769059f3b05a7040be2a59428c48be3, type: 2}
-  - {fileID: 11400000, guid: 6151bf9d009869f4ab05605671e351da, type: 2}
-  container: {fileID: 739756916}
-  islandButtonPrefab: {fileID: 3435202182150828139, guid: 0a2083a871443bc4c917129d6751728c, type: 3}
+  _container: {fileID: 739756916}
+  _islandButtonPrefab: {fileID: 3435202182150828139, guid: 0a2083a871443bc4c917129d6751728c, type: 3}
 --- !u!4 &496446867
 Transform:
   m_ObjectHideFlags: 0
@@ -485,7 +420,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 52818933}
   - {fileID: 1518879627}
   - {fileID: 962965027}
   m_Father: {fileID: 0}
@@ -507,7 +441,7 @@ GameObject:
   - component: {fileID: 739756917}
   - component: {fileID: 739756918}
   m_Layer: 5
-  m_Name: Content
+  m_Name: Conteiner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

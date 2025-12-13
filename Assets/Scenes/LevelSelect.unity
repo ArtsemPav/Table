@@ -904,7 +904,7 @@ GameObject:
   - component: {fileID: 1148408442}
   - component: {fileID: 1148408441}
   m_Layer: 5
-  m_Name: Content
+  m_Name: Conteiner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -998,9 +998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8b9e56ece88574fb277b4cd689441f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentIsland: {fileID: 0}
-  container: {fileID: 1148408440}
-  levelButtonPrefab: {fileID: 238695863564211465, guid: 6d82fc9abd5f84e449cb2359fb9d7876, type: 3}
+  _container: {fileID: 1148408440}
+  _levelButtonPrefab: {fileID: 238695863564211465, guid: 6d82fc9abd5f84e449cb2359fb9d7876, type: 3}
 --- !u!4 &1190530039
 Transform:
   m_ObjectHideFlags: 0

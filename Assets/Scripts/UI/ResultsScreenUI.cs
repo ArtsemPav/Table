@@ -1,17 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Game.Data;
 
 public class ResultsScreenUI : MonoBehaviour
 {
     [Header("Texts")]
-    public TMP_Text resultTitleText;
-    public TMP_Text levelNameText;
-    public TMP_Text coinsText;
-    public TMP_Text xpText;
+    [SerializeField] private TMP_Text _resultTitleText;
+    [SerializeField] private TMP_Text _levelNameText;
+    [SerializeField] private TMP_Text _coinsText;
+    [SerializeField] private TMP_Text _xpText;
 
     [Header("Stars")]
-    public TMP_Text starsText;
+    [SerializeField] private TMP_Text _starsText;
+
+    private LevelProgressData _levelProgressData;
+    private LevelConfig _levelConfig;
+    private IslandConfig _islandConfig;
 
     private void Start()
     {
@@ -20,36 +25,39 @@ public class ResultsScreenUI : MonoBehaviour
 
     private void ApplyResult()
     {
+
+        _islandConfig = GameManager.Instance.GetLastIslandConfig();
+        _levelConfig = GameManager.Instance.GetLastLevelConfig();
+        _levelProgressData = GameManager.Instance.PlayerData.GetLevelProgress(_islandConfig.islandId, _levelConfig.levelId);
         // Если по какой-то причине результат не задан — fallback
-        var level = BattleResultHolder.Level;
-
+        var level = _levelConfig;
         bool isWin = BattleResultHolder.IsWin;
-        int stars = BattleResultHolder.StarsEarned;
-        int coins = BattleResultHolder.CoinsReward;
-        int xp = BattleResultHolder.XpReward;
+        int stars = _levelProgressData.starsEarned;
+        int coins = _levelConfig.baseCoinsReward;
+        int xp = _levelConfig.baseXpReward;
 
-        if (resultTitleText != null)
-            resultTitleText.text = isWin ? "Победа!" : "Поражение";
+        if (_resultTitleText != null)
+            _resultTitleText.text = isWin ? "Победа!" : "Поражение";
 
-        if (levelNameText != null)
+        if (_levelNameText != null)
         {
             if (level != null)
-                levelNameText.text = level.displayName;
+                _levelNameText.text = level.displayName;
             else
-                levelNameText.text = "Уровень";
+                _levelNameText.text = "Уровень";
         }
 
-        if (coinsText != null)
-            coinsText.text = isWin ? $"Монеты: +{coins}" : "Монеты: 0";
+        if (_coinsText != null)
+            _coinsText.text = isWin ? $"Монеты: +{coins}" : "Монеты: 0";
 
-        if (xpText != null)
-            xpText.text = isWin ? $"Опыт: +{xp}" : "Опыт: 0";
+        if (_xpText != null)
+            _xpText.text = isWin ? $"Опыт: +{xp}" : "Опыт: 0";
 
         // Звёзды
         
-        if (starsText != null)
+        if (_starsText != null)
         {
-            starsText.text = new string('*', stars) + new string('-', 3 - stars);
+            _starsText.text = new string('*', stars) + new string('-', 3 - stars);
         }
     }
 }

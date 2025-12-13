@@ -1204,13 +1204,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4f485fa1ccee441b35fef36c539996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 6189847460847445190}
-  nameText: {fileID: 7110782274704460348}
-  progressText: {fileID: 5583346675382102410}
-  TotalStarText: {fileID: 7462941849497802303}
-  progressBar: {fileID: 2096763746473138100}
-  lockOverlay: {fileID: 1313843700235736448}
-  hoverScale: 1.05
-  hoverSpeed: 8
-  clickScale: 1.15
-  clickDuration: 0.12
+  _nameText: {fileID: 7110782274704460348}
+  _progressText: {fileID: 5583346675382102410}
+  _TotalStarText: {fileID: 7462941849497802303}
+  _progressBar: {fileID: 2096763746473138100}
+  _lockOverlay: {fileID: 1313843700235736448}
+  _hoverScale: 1.05
+  _hoverSpeed: 8
+  _clickScale: 1.15
+  _clickDuration: 0.12

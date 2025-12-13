@@ -3,14 +3,11 @@ using Game.Data;
 
 public class IslandSelectUI : MonoBehaviour
 {
- //   [Header("Data")]
- //   public IslandConfig[] islands;        // задать в инспекторе
-
     [Header("UI")]
-    public Transform container;           // родитель для кнопок (Grid/Horizontal Layout Group)
-    public IslandButtonUI islandButtonPrefab;
+    [SerializeField] private Transform _container;           // родитель для кнопок (Grid/Horizontal Layout Group)
+    [SerializeField] private IslandButtonUI _islandButtonPrefab;
 
-    private readonly IslandConfig[] islands = GameManager.Instance.islands;
+    private IslandConfig[] _islands;
 
     private void Start()
     {
@@ -19,19 +16,20 @@ public class IslandSelectUI : MonoBehaviour
 
     private void BuildUI()
     {
-        if (islands == null || islands.Length == 0)
+        _islands = GameManager.Instance.IslandsList;
+        if (_islands == null || _islands.Length == 0)
         {
             Debug.LogWarning("IslandSelectUI: no islands assigned.");
             return;
         }
 
         // очистим старые кнопки
-        foreach (Transform child in container)
+        foreach (Transform child in _container)
             Destroy(child.gameObject);
 
-        foreach (var island in islands)
+        foreach (var island in _islands)
         {
-            var btn = Instantiate(islandButtonPrefab, container);
+            var btn = Instantiate(_islandButtonPrefab, _container);
             btn.Setup(island);
         }
     }

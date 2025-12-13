@@ -937,14 +937,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6954f84ad2762274f9dd3199fd8e338a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelConfig: {fileID: 0}
-  taskText: {fileID: 1963333636}
-  answerInput: {fileID: 915508050}
-  timer: {fileID: 1918220488}
-  bossHpBar: {fileID: 1755473637}
-  playerHpBar: {fileID: 248930962}
-  bossHPText: {fileID: 443759589}
-  playerMaxHp: 3
+  _taskText: {fileID: 1963333636}
+  _answerInput: {fileID: 915508050}
+  _timer: {fileID: 1918220488}
+  _bossHpBar: {fileID: 1755473637}
+  _playerHpBar: {fileID: 248930962}
+  _bossHPText: {fileID: 443759589}
+  _playerMaxHp: 3
 --- !u!4 &711375998
 Transform:
   m_ObjectHideFlags: 0

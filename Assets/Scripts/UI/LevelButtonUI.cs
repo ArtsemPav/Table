@@ -9,23 +9,23 @@ public class LevelButtonUI : MonoBehaviour,
     IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("UI")]
-    public TMP_Text nameText;
-    public TMP_Text starsText;
-    public GameObject lockOverlay;
+    [SerializeField] private TMP_Text _nameText;
+    [SerializeField] private TMP_Text _starsText;
+    [SerializeField] private GameObject _lockOverlay;
 
     [Header("Animation")]
-    public float hoverScale = 1.05f;
-    public float hoverSpeed = 8f;
-    public float clickScale = 1.15f;
-    public float clickDuration = 0.12f;
+    [SerializeField] private float _hoverScale = 1.05f;
+    [SerializeField] private float _hoverSpeed = 8f;
+    [SerializeField] private float _clickScale = 1.15f;
+    [SerializeField] private float _clickDuration = 0.12f;
 
-    private LevelConfig _config;
+
     private bool _isUnlocked;
     private bool _hover;
     private Vector3 _baseScale;
-
     private LevelProgressData _levelProgressData;
     private IslandConfig _islandConfig;
+    private LevelConfig _levelConfig;
 
     private void Awake()
     {
@@ -34,50 +34,43 @@ public class LevelButtonUI : MonoBehaviour,
 
     public void Setup(LevelConfig config)
     {
-        _islandConfig = SaveManager.Instance.playerData.LastSelectedIsLand;
-        _config = config;
-        _levelProgressData = SaveManager.Instance.playerData.GetLevelProgress(_islandConfig.islandId, _config.levelId);
-        nameText.text = config.displayName;
+        _islandConfig = GameManager.Instance.PlayerData.LastSelectedIsLand;
+        _levelConfig = config;
+        _levelProgressData = GameManager.Instance.PlayerData.GetLevelProgress(_islandConfig.islandId, _levelConfig.levelId);
+        _nameText.text = config.displayName;
 
         int stars = _levelProgressData.starsEarned;
 
-        starsText.text = new string('*', stars) + new string('-', 3 - stars);
+        _starsText.text = new string('*', stars) + new string('-', 3 - stars);
 
         // Check unlock
         _isUnlocked = _levelProgressData.isUnlocked;
 
         if (_isUnlocked)
         {
-     //       iconImage.sprite = config.icon;
-            if (lockOverlay != null) lockOverlay.SetActive(false);
+            if (_lockOverlay != null) _lockOverlay.SetActive(false);
         }
         else
         {
-     //       if (config.lockedIcon != null)
-     //           iconImage.sprite = config.lockedIcon;
-            if (lockOverlay != null) lockOverlay.SetActive(true);
+            if (_lockOverlay != null) _lockOverlay.SetActive(true);
         }
     }
-    // ----------------------------
-    // UPDATE (hover animation)
-    // ----------------------------
 
+    // UPDATE (hover animation)
     private void Update()
     {
         Vector3 target = _hover && _isUnlocked
-            ? _baseScale * hoverScale
+            ? _baseScale * _hoverScale
             : _baseScale;
 
         transform.localScale = Vector3.Lerp(
             transform.localScale,
             target,
-            Time.unscaledDeltaTime * hoverSpeed
+            Time.unscaledDeltaTime * _hoverSpeed
         );
     }
 
-    // ----------------------------
     // EVENTS
-    // ----------------------------
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (_isUnlocked)
@@ -96,35 +89,32 @@ public class LevelButtonUI : MonoBehaviour,
         StartCoroutine(ClickAnimation());
 
         // Load scene
-        SaveManager.Instance.playerData.LastSelectedLevel = _config;
-        SaveManager.Instance.Save();
+        GameManager.Instance.PlayerData.LastSelectedLevel = _levelConfig;
+        SaveManager.Instance.Save(GameManager.Instance.PlayerData);
         SceneController.Instance.LoadScene("Battle");
     }
 
-    // ----------------------------
     // CLICK ANIMATION
-    // ----------------------------
-
     private IEnumerator ClickAnimation()
     {
         Vector3 start = transform.localScale;
-        Vector3 peak = _baseScale * clickScale;
+        Vector3 peak = _baseScale * _clickScale;
 
         float t = 0f;
-        while (t < clickDuration)
+        while (t < _clickDuration)
         {
             t += Time.unscaledDeltaTime;
-            transform.localScale = Vector3.Lerp(start, peak, t / clickDuration);
+            transform.localScale = Vector3.Lerp(start, peak, t / _clickDuration);
             yield return null;
         }
 
         t = 0f;
-        Vector3 target = _hover ? _baseScale * hoverScale : _baseScale;
+        Vector3 target = _hover ? _baseScale * _hoverScale : _baseScale;
 
-        while (t < clickDuration)
+        while (t < _clickDuration)
         {
             t += Time.unscaledDeltaTime;
-            transform.localScale = Vector3.Lerp(peak, target, t / clickDuration);
+            transform.localScale = Vector3.Lerp(peak, target, t / _clickDuration);
             yield return null;
         }
 

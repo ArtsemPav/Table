@@ -256,81 +256,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279849575}
   m_CullTransparentMesh: 1
---- !u!1 &417174992
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 417174993}
-  m_Layer: 0
-  m_Name: LocalizationManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &417174993
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417174992}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &474479863
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 474479864}
-  - component: {fileID: 474479865}
-  m_Layer: 0
-  m_Name: EconomyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &474479864
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474479863}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &474479865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474479863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297a8c8fdf1d76b45973ba26cfe2bee8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &896796604
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,11 +300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb11d5fc7a7e6724cb52b784b229cb31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  islands:
+  IslandsList:
   - {fileID: 11400000, guid: f769059f3b05a7040be2a59428c48be3, type: 2}
   - {fileID: 11400000, guid: 6151bf9d009869f4ab05605671e351da, type: 2}
-  defaultIslandConfig: {fileID: 11400000, guid: f769059f3b05a7040be2a59428c48be3, type: 2}
-  defaultLevelConfig: {fileID: 11400000, guid: b8e750e326f471843b11e4e43bf45a7a, type: 2}
   xpPerLevel: 100
   questTemplates: []
   achievementDefs: []
@@ -1093,15 +1016,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c07ace2e218c83b41812aa0f91a0da0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData:
-    totalCoins: 0
-    totalXp: 0
-    playerLevel: 0
-    LastSelectedLevel: {fileID: 0}
-    LastSelectedIsLand: {fileID: 0}
-    islandsProgress: []
-    totalPlayTime: 0
-    totalLevelsCompleted: 0
 --- !u!1 &1601120879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,37 +1091,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601120879}
   m_CullTransparentMesh: 1
---- !u!1 &1763821787
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1763821788}
-  m_Layer: 0
-  m_Name: DailyQuestManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1763821788
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1763821787}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1906922105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,10 +1358,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1002795193}
   - {fileID: 1197170906}
-  - {fileID: 2840911809603141669}
-  - {fileID: 896796605}
-  - {fileID: 474479864}
-  - {fileID: 1763821788}
-  - {fileID: 417174993}
-  - {fileID: 1579927325}
   - {fileID: 1339546452}
+  - {fileID: 2840911809603141669}
+  - {fileID: 1579927325}
+  - {fileID: 896796605}

@@ -5,19 +5,16 @@ using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
-    [Header("Config")]
-    public LevelConfig levelConfig;
-
     [Header("UI")]
-    public TMP_Text taskText;
-    public TMP_InputField answerInput;
-    public GameObject timer;
-    public Slider bossHpBar;
-    public Slider playerHpBar;
-    public TMP_Text bossHPText;
+    [SerializeField] private TMP_Text _taskText;
+    [SerializeField] private TMP_InputField _answerInput;
+    [SerializeField] private GameObject _timer;
+    [SerializeField] private Slider _bossHpBar;
+    [SerializeField] private Slider _playerHpBar;
+    [SerializeField] private TMP_Text _bossHPText;
 
     [Header("Params")]
-    public int playerMaxHp = 3;
+    [SerializeField] private int _playerMaxHp = 3;
 
     private int _playerHp;
     private int _bossHp;
@@ -26,52 +23,50 @@ public class BattleManager : MonoBehaviour
     private int _tasksSolved;
     private bool _isBattleActive;
     private MathTask _currentTask;
-    private int stars;
+    private int _stars;
+    private LevelConfig _levelConfig;
+    private IslandConfig _islandConfig;
 
-    private void Awake()
-    {
-        if (SaveManager.Instance.playerData.LastSelectedLevel != null)
-            levelConfig = SaveManager.Instance.playerData.LastSelectedLevel;
-    }
     private void Start()
     {
-        _timerText = timer.GetComponentInChildren<TMP_Text>();
+        _timerText = _timer.GetComponentInChildren<TMP_Text>();
 
         if (_timerText == null)
         {
             Debug.LogError("timerText not find!");
         }
-
+        _islandConfig = GameManager.Instance.GetLastIslandConfig();
+        _levelConfig = GameManager.Instance.GetLastLevelConfig();
         ApplyLevelConfig();
         StartBattle();
     }
 
     private void ApplyLevelConfig()
     {
-        if (levelConfig == null)
+        if (_levelConfig == null)
         {
             Debug.LogError("BattleManager: LevelConfig not set!");
             enabled = false;
             return;
         }
 
-        _bossHp = levelConfig.levelKind == LevelKind.Boss
-            ? levelConfig.bossHp
-            : levelConfig.tasksCount;
-        bossHPText.text = _bossHp.ToString();
+        _bossHp = _levelConfig.levelKind == LevelKind.Boss
+            ? _levelConfig.bossHp
+            : _levelConfig.tasksCount;
+        _bossHPText.text = _bossHp.ToString();
 
-        _playerHp = playerMaxHp;
-        _timeLeft = levelConfig.baseTime;
+        _playerHp = _playerMaxHp;
+        _timeLeft = _levelConfig.baseTime;
 
-        if (bossHpBar != null)
+        if (_bossHpBar != null)
         {
-            bossHpBar.maxValue = _bossHp;
-            bossHpBar.value = _bossHp;
+            _bossHpBar.maxValue = _bossHp;
+            _bossHpBar.value = _bossHp;
         }
-        if (playerHpBar != null)
+        if (_playerHpBar != null)
         {
-            playerHpBar.maxValue = playerMaxHp;
-            playerHpBar.value = _playerHp;
+            _playerHpBar.maxValue = _playerMaxHp;
+            _playerHpBar.value = _playerHp;
         }
     }
 
@@ -82,11 +77,11 @@ public class BattleManager : MonoBehaviour
         NextTask();
         if (_timeLeft <= 0)
         {
-            timer.SetActive(false);
+            _timer.SetActive(false);
         }
         else if (_timeLeft > 0)
         {
-            timer.SetActive(true);
+            _timer.SetActive(true);
             StartCoroutine(TimerRoutine());
         }
     }
@@ -110,28 +105,28 @@ public class BattleManager : MonoBehaviour
     private void NextTask()
     {
         _currentTask = MathTaskGenerator.Instance.Generate(
-            levelConfig.taskType,
-            levelConfig.minValue,
-            levelConfig.maxValue
+            _levelConfig.taskType,
+            _levelConfig.minValue,
+            _levelConfig.maxValue
         );
 
-        if (taskText != null)
-            taskText.text = $"{_currentTask.a} {_currentTask.op} {_currentTask.b} = ?";
+        if (_taskText != null)
+            _taskText.text = $"{_currentTask.a} {_currentTask.op} {_currentTask.b} = ?";
 
-        if (answerInput != null)
+        if (_answerInput != null)
         {
-            answerInput.text = "";
-            answerInput.ActivateInputField();
+            _answerInput.text = "";
+            _answerInput.ActivateInputField();
         }
     }
 
     public void OnSubmitAnswer()
     {
         if (!_isBattleActive) return;
-        if (string.IsNullOrEmpty(answerInput.text)) return;
+        if (string.IsNullOrEmpty(_answerInput.text)) return;
 
         int parsed;
-        if (!int.TryParse(answerInput.text, out parsed))
+        if (!int.TryParse(_answerInput.text, out parsed))
         {
             WrongAnswer();
             return;
@@ -148,10 +143,10 @@ public class BattleManager : MonoBehaviour
         _tasksSolved++;
         _bossHp--;
 
-        if (bossHpBar != null)
+        if (_bossHpBar != null)
         {
-            bossHpBar.value = _bossHp;
-            bossHPText.text = _bossHp.ToString();
+            _bossHpBar.value = _bossHp;
+            _bossHPText.text = _bossHp.ToString();
         }
 
         if (_bossHp <= 0)
@@ -167,8 +162,8 @@ public class BattleManager : MonoBehaviour
     private void WrongAnswer()
     {
         _playerHp--;
-        if (playerHpBar != null)
-            playerHpBar.value = _playerHp;
+        if (_playerHpBar != null)
+            _playerHpBar.value = _playerHp;
 
 
         if (_playerHp <= 0)
@@ -186,27 +181,22 @@ public class BattleManager : MonoBehaviour
         _isBattleActive = false;
         if (_playerHp == 3)
         {
-            stars = 3;
+            _stars = 3;
         } else if (_playerHp == 2)
         {
-            stars = 2;
+            _stars = 2;
         }
         else if (_playerHp == 2)
         {
-            stars = 1;
+            _stars = 1;
         }
 
-        if (GameManager.Instance != null && levelConfig != null)
+        if (GameManager.Instance != null && _levelConfig != null)
         {
-   //         GameManager.Instance.SetStars(levelConfig.levelId, stars);
-   //         GameManager.Instance.AddXP(levelConfig.baseXpReward);
+            GameManager.Instance.PlayerData.UpdateLevelProgress(_islandConfig.islandId, _levelConfig.levelId, _stars, 0f, _levelConfig.baseCoinsReward, _levelConfig.baseXpReward);
+            SaveManager.Instance.Save(GameManager.Instance.PlayerData);
         }
-
         BattleResultHolder.IsWin = true;
-        BattleResultHolder.Level = levelConfig;
-        BattleResultHolder.CoinsReward = levelConfig.baseCoinsReward;
-        BattleResultHolder.XpReward = levelConfig.baseXpReward;
-        BattleResultHolder.StarsEarned = stars;
 
         SceneController.Instance.LoadScene("Results");
     }
@@ -214,13 +204,7 @@ public class BattleManager : MonoBehaviour
     private void OnBattleLose()
     {
         _isBattleActive = false;
-
         BattleResultHolder.IsWin = false;
-        BattleResultHolder.Level = levelConfig;
-        BattleResultHolder.CoinsReward = 0;
-        BattleResultHolder.XpReward = 0;
-        BattleResultHolder.StarsEarned = 0;
-
         SceneController.Instance.LoadScene("Results");
     }
 }
