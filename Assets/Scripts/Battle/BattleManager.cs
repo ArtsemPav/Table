@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 
 public class BattleManager : MonoBehaviour
@@ -26,6 +27,8 @@ public class BattleManager : MonoBehaviour
     private int _stars;
     private LevelConfig _levelConfig;
     private IslandConfig _islandConfig;
+    private List<TaskRecord> _taskHistory = new List<TaskRecord>();
+    private float _taskStartTime;
 
     private void Start()
     {
@@ -104,6 +107,8 @@ public class BattleManager : MonoBehaviour
 
     private void NextTask()
     {
+        _taskStartTime = Time.time;
+
         _currentTask = MathTaskGenerator.Instance.Generate(
             _levelConfig.taskType,
             _levelConfig.minValue,
@@ -128,14 +133,31 @@ public class BattleManager : MonoBehaviour
         int parsed;
         if (!int.TryParse(_answerInput.text, out parsed))
         {
+            RecordTask(0, false);
             WrongAnswer();
             return;
         }
+
+        bool isCorrect = parsed == _currentTask.answer;
+        RecordTask(parsed, isCorrect);
 
         if (parsed == _currentTask.answer)
             CorrectAnswer();
         else
             WrongAnswer();
+    }
+    private void RecordTask(int playerAnswer, bool isCorrect)
+    {
+        TaskRecord record = new TaskRecord
+        {
+            taskText = $"{_currentTask.a} {_currentTask.op} {_currentTask.b}",
+            correctAnswer = _currentTask.answer,
+            playerAnswer = playerAnswer,
+            isCorrect = isCorrect,
+            timeSpent = Time.time - _taskStartTime
+        };
+
+        _taskHistory.Add(record);
     }
 
     private void CorrectAnswer()
@@ -196,6 +218,7 @@ public class BattleManager : MonoBehaviour
             GameManager.Instance.PlayerData.UpdateLevelProgress(_islandConfig.islandId, _levelConfig.levelId, _stars, 0f, _levelConfig.baseCoinsReward, _levelConfig.baseXpReward);
             SaveManager.Instance.Save(GameManager.Instance.PlayerData);
         }
+        BattleResultHolder.TaskHistory = new List<TaskRecord>(_taskHistory);
         BattleResultHolder.IsWin = true;
 
         SceneController.Instance.LoadScene("Results");
@@ -204,7 +227,10 @@ public class BattleManager : MonoBehaviour
     private void OnBattleLose()
     {
         _isBattleActive = false;
+
+        BattleResultHolder.TaskHistory = new List<TaskRecord>(_taskHistory);
         BattleResultHolder.IsWin = false;
+
         SceneController.Instance.LoadScene("Results");
     }
 }
